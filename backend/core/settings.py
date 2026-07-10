@@ -494,6 +494,22 @@ if not DEBUG:
     SECURE_HSTS_PRELOAD = True
 
 # Logging Configuration
+# Log to a file only when the logs directory is actually writable (local dev).
+# In containers (Railway/Docker) that path is owned by root / not writable by the
+# runtime user, so fall back to console/stdout — which the platform captures.
+_LOG_DIR = BASE_DIR / 'logs'
+_FILE_LOGGING = os.getenv('LOG_TO_FILE', 'True').lower() == 'true'
+try:
+    os.makedirs(_LOG_DIR, exist_ok=True)
+    _probe = _LOG_DIR / '.write_test'
+    with open(_probe, 'a'):
+        pass
+    os.remove(_probe)
+except Exception:
+    _FILE_LOGGING = False
+
+_LOG_HANDLERS = ['console', 'file'] if _FILE_LOGGING else ['console']
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -513,42 +529,22 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'verbose',
         },
-        'file': {
+        **({'file': {
             'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'logs' / 'django.log',
+            'filename': str(_LOG_DIR / 'django.log'),
             'formatter': 'verbose',
-        },
+        }} if _FILE_LOGGING else {}),
     },
     'root': {
-        'handlers': ['console', 'file'],
+        'handlers': _LOG_HANDLERS,
         'level': 'INFO',
     },
     'loggers': {
-        'django': {
-            'handlers': ['console', 'file'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
-            'propagate': False,
-        },
-        'agents': {
-            'handlers': ['console', 'file'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-        'tools': {
-            'handlers': ['console', 'file'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-        'solutions': {
-            'handlers': ['console', 'file'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-        'celery': {
-            'handlers': ['console', 'file'],
-            'level': 'INFO',
-            'propagate': False,
-        },
+        'django': {'handlers': _LOG_HANDLERS, 'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'), 'propagate': False},
+        'agents': {'handlers': _LOG_HANDLERS, 'level': 'INFO', 'propagate': False},
+        'tools': {'handlers': _LOG_HANDLERS, 'level': 'INFO', 'propagate': False},
+        'solutions': {'handlers': _LOG_HANDLERS, 'level': 'INFO', 'propagate': False},
+        'celery': {'handlers': _LOG_HANDLERS, 'level': 'INFO', 'propagate': False},
     },
 }
 
