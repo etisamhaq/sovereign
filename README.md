@@ -2,7 +2,7 @@
 
 **Sovereign is a self-hosted AI agent that audits contracts and policies against GDPR, HIPAA, and SOC 2 — running entirely on your own AMD Instinct GPUs, so confidential documents never leave your infrastructure.**
 
-Built for the **AMD Developer Hackathon: ACT II** (Track 3 — Unicorn). Live demo:
+Live demo:
 
 - **App:** https://sovereign-compliance.vercel.app
 - **API:** https://sovereign-production-f00d.up.railway.app

@@ -75,7 +75,7 @@ def test_router_raises_when_all_fail(monkeypatch):
         router.chat(messages=[{'role': 'user', 'content': 'hi'}])
 
 
-# ── AMD + Fireworks providers (the hackathon delta) ────────────────────────
+# ── AMD + Fireworks providers ──────────────────────────────────────────────
 
 
 def test_amd_and_fireworks_are_registered():
