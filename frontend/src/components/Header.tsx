@@ -43,6 +43,7 @@ const Header: React.FC = () => {
     { name: 'Workflows', href: '/workflows', auth: false, guestOnly: false },
     { name: 'Marketplace', href: '/marketplace', auth: false, guestOnly: false },
     { name: 'Tools', href: '/tools', auth: true, guestOnly: false },
+    { name: 'Compliance', href: '/compliance', auth: true, guestOnly: false },
     { name: 'Agents', href: '/agents', auth: true, guestOnly: false },
     { name: 'Chat', href: '/chat', auth: true, guestOnly: false },
     { name: 'Dashboard', href: '/dashboard', auth: true, guestOnly: false },

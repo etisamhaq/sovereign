@@ -62,6 +62,9 @@ const SellerDashboardPage = lazy(() => import('./pages/agents/SellerDashboardPag
 // Streaming chat agent (multi-LLM router, function calling, YAML workflows)
 const AgentChatPage = lazy(() => import('./pages/AgentPage'));
 
+// Sovereign compliance audit (the flagship — runs privately on AMD Instinct)
+const CompliancePage = lazy(() => import('./pages/CompliancePage'));
+
 const CommunityPage = lazy(() => import('./pages/community/CommunityPage'));
 const PostDetailPage = lazy(() => import('./pages/community/PostDetailPage'));
 const NewPostPage = lazy(() => import('./pages/community/NewPostPage'));
@@ -191,6 +194,9 @@ function App() {
 
                             {/* Streaming chat agent — full-screen immersive surface */}
                             <Route path="/chat" element={<AgentChatPage />} />
+
+                            {/* Sovereign compliance audit (flagship) */}
+                            <Route path="/compliance" element={<CompliancePage />} />
 
                             <Route path="/referrals" element={<ReferralPage />} />
                             <Route path="/profile" element={<ProfilePage />} />
