@@ -322,21 +322,26 @@ function _stream(
     const decoder = new TextDecoder('utf-8');
     let buffer = '';
 
-    const emit = (rawDataLines: string[], _eventName: string | null) => {
+    const emit = (rawDataLines: string[], eventName: string | null) => {
       if (!rawDataLines.length) return;
       const text = rawDataLines.join('\n').trim();
       if (!text) return;
       try {
         const parsed = JSON.parse(text);
-        // Server already sends {type, data}; pass through verbatim.
-        if (parsed && typeof parsed === 'object' && 'type' in parsed) {
+        // The server uses named SSE frames: `event: <type>` + `data: <payload>`,
+        // where the payload is the event's `data` (no `type` inside it). So the
+        // SSE event name IS the event type. Fall back to an envelope `{type,data}`
+        // or a bare token only when there's no event name.
+        if (eventName) {
+          handlers.onEvent?.({ type: eventName, data: parsed } as AgentStreamEvent);
+        } else if (parsed && typeof parsed === 'object' && 'type' in parsed) {
           handlers.onEvent?.(parsed as AgentStreamEvent);
         } else {
           handlers.onEvent?.({ type: 'token', data: parsed } as AgentStreamEvent);
         }
       } catch {
         handlers.onEvent?.({
-          type: 'token',
+          type: (eventName as any) || 'token',
           data: { delta: text },
         } as AgentStreamEvent);
       }
