@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, UserCircleIcon, SunIcon, MoonIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
-import { CpuChipIcon, UserGroupIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
+import { CpuChipIcon, UserGroupIcon, ArrowPathIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
 import { useAuthStore } from '../store/authStore';
 import { useTheme } from '../contexts/ThemeContext';
 import CoinDisplay from './rewards/CoinDisplay';
@@ -37,20 +37,14 @@ const Header: React.FC = () => {
 
   const navigation = [
     { name: 'Home', href: '/', auth: false, guestOnly: false },
+    { name: 'Compliance', href: '/compliance', auth: false, guestOnly: false },
     { name: 'Features', href: '/features', auth: false, guestOnly: false },
-    { name: 'Try Free', href: '/try-tools', auth: false, guestOnly: true },
-    { name: 'Solutions', href: '/solutions', auth: false, guestOnly: false, hasDropdown: true },
-    { name: 'Workflows', href: '/workflows', auth: false, guestOnly: false },
-    { name: 'Marketplace', href: '/marketplace', auth: false, guestOnly: false },
+    { name: 'Pricing', href: '/pricing', auth: false, guestOnly: false },
     { name: 'Tools', href: '/tools', auth: true, guestOnly: false },
-    { name: 'Compliance', href: '/compliance', auth: true, guestOnly: false },
     { name: 'Agents', href: '/agents', auth: true, guestOnly: false },
     { name: 'Chat', href: '/chat', auth: true, guestOnly: false },
     { name: 'Dashboard', href: '/dashboard', auth: true, guestOnly: false },
-    { name: 'Library', href: '/history', auth: true, guestOnly: false },
-    { name: 'Referrals', href: '/referrals', auth: true, guestOnly: false },
     { name: 'Community', href: '/community', auth: false, guestOnly: false },
-    { name: 'Pricing', href: '/pricing', auth: false, guestOnly: false },
   ];
 
   const handleLogout = async () => {
@@ -66,12 +60,10 @@ const Header: React.FC = () => {
             <div className="flex h-16 justify-between">
               <div className="flex">
                 <Link to="/" className="flex flex-shrink-0 items-center">
-                  <img
-                    src="/logo.jpg"
-                    alt="Sovereign"
-                    className="h-8 w-8 rounded-md"
-                  />
-                  <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600 text-white">
+                    <ShieldCheckIcon className="h-5 w-5" />
+                  </span>
+                  <span className="ml-2 font-display text-xl font-bold text-gray-900 dark:text-white">
                     Sovereign
                   </span>
                 </Link>
@@ -139,7 +131,7 @@ const Header: React.FC = () => {
                         <Link
                           key={item.name}
                           to={item.href}
-                          className={`inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium transition-colors ${
+                          className={`inline-flex items-center whitespace-nowrap border-b-2 px-1 pt-1 text-sm font-medium transition-colors ${
                             isActive
                               ? 'border-primary-500 text-gray-900 dark:text-white'
                               : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white'
@@ -239,13 +231,13 @@ const Header: React.FC = () => {
                   <div className="flex items-center space-x-4">
                     <Link
                       to="/login"
-                      className="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white"
+                      className="whitespace-nowrap text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white"
                     >
                       Sign in
                     </Link>
                     <Link
                       to="/register"
-                      className="btn btn-primary"
+                      className="btn btn-primary whitespace-nowrap"
                     >
                       Get Started
                     </Link>

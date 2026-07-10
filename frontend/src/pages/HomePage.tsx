@@ -14,14 +14,15 @@ import {
   PhotoIcon,
   BeakerIcon,
   ChartBarIcon,
-  SparklesIcon,
   ArrowRightIcon,
   BoltIcon,
   GlobeAltIcon,
   ShieldCheckIcon,
   CurrencyDollarIcon,
   ClockIcon,
-  ArrowTopRightOnSquareIcon
+  ArrowTopRightOnSquareIcon,
+  LockClosedIcon,
+  DocumentMagnifyingGlassIcon
 } from '@heroicons/react/24/outline';
 
 const categoryColorMap: Record<string, { bg: string; text: string }> = {
@@ -34,10 +35,11 @@ const categoryColorMap: Record<string, { bg: string; text: string }> = {
 };
 
 const HomePage: React.FC = () => {
-  usePageTitle(undefined, 'Sovereign — Your AI-powered creative assistant. 33+ tools for writing, education, and productivity. All for just $5/month.');
+  usePageTitle(undefined, 'Sovereign — a self-hosted AI agent that audits contracts and policies against GDPR, HIPAA, and SOC 2, running privately on your own AMD Instinct GPUs.');
   const { isAuthenticated } = useAuthStore();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const ctaLink = isAuthenticated ? '/dashboard' : '/register';
+  const auditLink = '/compliance';
 
   // Tool categories with their tools
   const toolCategories = [
@@ -176,105 +178,101 @@ const HomePage: React.FC = () => {
   return (
     <div className="relative">
       <SEOHead
-        description="Sovereign — Your AI-powered creative assistant. 33+ tools for writing, education, and productivity. All for just $5/month."
+        description="Sovereign — a self-hosted AI agent that audits contracts and policies against GDPR, HIPAA, and SOC 2, running privately on your own AMD Instinct GPUs. Your confidential documents never leave your infrastructure."
         canonical="/"
-        keywords="AI writing tools, AI paraphrase tool, grammar checker, text summarizer, essay writer, citation generator, research assistant, productivity tools"
+        keywords="compliance audit, GDPR audit, HIPAA compliance, SOC 2, private LLM, self-hosted AI, AMD Instinct, data sovereignty, contract review AI, policy review"
         jsonLd={{
           '@context': 'https://schema.org',
-          '@type': 'WebApplication',
+          '@type': 'SoftwareApplication',
           name: 'Sovereign',
           url: 'https://sovereign.com',
-          applicationCategory: 'UtilitiesApplication',
+          applicationCategory: 'SecurityApplication',
           operatingSystem: 'Web',
-          description: '33+ AI-powered tools for writing, research, education, and productivity.',
-          offers: {
-            '@type': 'AggregateOffer',
-            lowPrice: '0',
-            highPrice: '5.00',
-            priceCurrency: 'USD',
-            offerCount: '33',
-          },
+          description: 'A self-hosted AI compliance-audit agent for GDPR, HIPAA, and SOC 2 that runs on your own AMD Instinct GPUs.',
         }}
       />
-      {/* Hero Section with Animated Background */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute top-40 left-1/2 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob" style={{ animationDelay: '4s' }}></div>
+      {/* Hero — dark, sovereign, compliance-first */}
+      <div className="relative overflow-hidden bg-gray-950">
+        {/* Ambient field: teal glow + faint grid, no purple blobs */}
+        <div className="absolute inset-0">
+          <div className="absolute -top-32 left-1/2 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-primary-500/20 blur-[120px]" />
+          <div className="absolute bottom-0 right-10 h-72 w-72 rounded-full bg-emerald-500/10 blur-[100px]" />
+          <div
+            className="absolute inset-0 opacity-[0.06]"
+            style={{
+              backgroundImage:
+                'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)',
+              backgroundSize: '46px 46px',
+              maskImage: 'radial-gradient(ellipse 80% 60% at 50% 35%, #000 40%, transparent 100%)',
+            }}
+          />
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-5xl px-4 py-28 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="text-center"
           >
-            {/* Badge */}
+            {/* Eyebrow — the sovereignty claim, not a feature count */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.1 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 dark:bg-primary-900/50 rounded-full mb-6"
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary-400/30 bg-primary-500/10 px-4 py-1.5"
             >
-              <SparklesIcon className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-              <span className="text-sm font-medium text-primary-700 dark:text-primary-300">
-                33+ AI Tools in One Platform
+              <LockClosedIcon className="h-4 w-4 text-primary-300" />
+              <span className="text-sm font-medium text-primary-200">
+                Self-hosted · runs on your own AMD Instinct GPUs
               </span>
             </motion.div>
 
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white">
-              Your AI-Powered
+            <h1 className="font-display text-5xl font-extrabold leading-[1.05] tracking-tight text-white md:text-6xl lg:text-7xl">
+              Audit compliance
               <br />
-              <span className="bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">
-                Creative Assistant
+              <span className="bg-gradient-to-r from-primary-300 via-teal-200 to-emerald-300 bg-clip-text text-transparent">
+                without leaking your data
               </span>
             </h1>
 
-            <p className="mx-auto mt-6 max-w-3xl text-xl text-gray-600 dark:text-gray-300">
-              Transform your workflow with Sovereign's comprehensive suite of AI tools.
-              From writing and education to productivity and content creation - all for just $5/month.
+            <p className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-gray-300 md:text-xl">
+              Sovereign is an AI agent that audits your contracts and policies against
+              <span className="font-semibold text-white"> GDPR, HIPAA, and SOC 2</span> — and runs
+              entirely on your own AMD hardware. Confidential documents never leave your
+              infrastructure, and never reach a third-party API.
             </p>
 
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link
-                to={ctaLink}
-                className="group relative px-8 py-4 bg-gradient-to-r from-primary-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+                to={auditLink}
+                className="group relative inline-flex items-center gap-2 rounded-xl bg-primary-500 px-8 py-4 font-semibold text-gray-950 shadow-lg shadow-primary-500/20 transition-all duration-200 hover:bg-primary-400 hover:shadow-xl"
               >
-                <span className="flex items-center gap-2">
-                  {isAuthenticated ? 'Go to Dashboard' : 'Start Free Trial'}
-                  <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </span>
+                <DocumentMagnifyingGlassIcon className="h-5 w-5" />
+                Run a compliance audit
+                <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
-                to="/tools"
-                className="px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-semibold rounded-xl shadow-md hover:shadow-lg border border-gray-200 dark:border-gray-700 transform hover:-translate-y-0.5 transition-all duration-200"
+                to="/features"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-8 py-4 font-semibold text-white transition-all duration-200 hover:bg-white/10"
               >
-                Explore All Tools
+                How it works
               </Link>
-              <a
-                href="#product-demo"
-                className="px-8 py-4 bg-transparent text-primary-700 dark:text-primary-300 font-semibold rounded-xl border border-primary-200 dark:border-primary-800 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all duration-200"
-              >
-                Watch 60-sec Demo
-              </a>
             </div>
 
-            {/* Trust badges */}
-            <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600 dark:text-gray-400">
+            {/* Trust row — provenance, not marketing fluff */}
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-gray-400">
               <div className="flex items-center gap-2">
-                <CheckIcon className="w-5 h-5 text-green-500" />
-                <span>No Credit Card Required</span>
+                <ShieldCheckIcon className="h-5 w-5 text-primary-400" />
+                <span>Data never leaves your GPUs</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckIcon className="w-5 h-5 text-green-500" />
-                <span>Cancel Anytime</span>
+                <CheckIcon className="h-5 w-5 text-primary-400" />
+                <span>GDPR · HIPAA · SOC 2 rulesets</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckIcon className="w-5 h-5 text-green-500" />
-                <span>Up to 2,000 Uses/Month</span>
+                <CheckIcon className="h-5 w-5 text-primary-400" />
+                <span>AMD Instinct + Fireworks, one toggle</span>
               </div>
             </div>
           </motion.div>
@@ -287,24 +285,25 @@ const HomePage: React.FC = () => {
       <div className="py-24 bg-gray-50 dark:bg-gray-900">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-base font-semibold leading-7 text-primary-600">Comprehensive Toolkit</h2>
-            <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
-              33+ AI Tools Organized for You
+            <h2 className="text-base font-semibold leading-7 text-primary-600">Built on a full agent platform</h2>
+            <p className="mt-2 font-display text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+              More than an auditor
             </p>
-            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
-              Everything you need for content creation, education, and productivity
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-600 dark:text-gray-300">
+              The same private, multi-provider agent runtime that powers compliance audits also ships
+              30+ document and research tools — all routed through your own AMD GPUs or Fireworks.
             </p>
 
-            {/* New Tools Coming Soon Message */}
+            {/* Provider note */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="mt-6 inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 rounded-full"
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary-50 px-4 py-2 dark:bg-primary-900/20"
             >
-              <SparklesIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-              <span className="text-sm font-medium text-purple-700 dark:text-purple-300">
-                🚀 New AI tools added weekly! We're constantly expanding our toolkit to serve you better.
+              <BoltIcon className="h-5 w-5 text-primary-600 dark:text-primary-400" />
+              <span className="text-sm font-medium text-primary-700 dark:text-primary-300">
+                One runtime, many providers — AMD Instinct, Fireworks, and Groq with automatic fallback.
               </span>
             </motion.div>
           </div>
