@@ -1,0 +1,4 @@
+# SSL-enabled config for sovereign.com — Reference copy
+# The default.conf file is now the active SSL config.
+# This file is kept as a reference only.
+# See default.conf for the production configuration.

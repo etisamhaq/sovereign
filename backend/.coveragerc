@@ -1,0 +1,22 @@
+[run]
+source = .
+omit = 
+    */migrations/*
+    */tests/*
+    */venv/*
+    */env/*
+    manage.py
+    */settings/*
+    */wsgi.py
+    */asgi.py
+    */urls.py
+    */admin.py
+    */apps.py
+
+[report]
+precision = 2
+show_missing = True
+skip_covered = False
+
+[html]
+directory = htmlcov

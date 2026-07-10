@@ -1,0 +1,92 @@
+/**
+ * Shared icon map: maps backend icon name strings to Heroicon components.
+ * Used by ToolCard, ForPersonaPage, and anywhere else that renders tool icons.
+ */
+import {
+  PencilSquareIcon,
+  DocumentTextIcon,
+  AcademicCapIcon,
+  SparklesIcon,
+  LanguageIcon,
+  ChartBarIcon,
+  CheckBadgeIcon,
+  MagnifyingGlassIcon,
+  VideoCameraIcon,
+  CalendarIcon,
+  BookOpenIcon,
+  DocumentIcon,
+  RectangleStackIcon,
+  CubeIcon,
+  ListBulletIcon,
+  ShieldCheckIcon,
+  ClipboardDocumentListIcon,
+  KeyIcon,
+  HashtagIcon,
+  DocumentDuplicateIcon,
+  CheckCircleIcon,
+  FaceSmileIcon,
+  ChatBubbleLeftRightIcon,
+  PhotoIcon,
+  EyeIcon,
+  MapIcon,
+  TableCellsIcon,
+  GlobeAltIcon,
+  CodeBracketIcon,
+  CommandLineIcon,
+  NewspaperIcon,
+  FilmIcon,
+  EnvelopeOpenIcon,
+  MegaphoneIcon,
+  DocumentMagnifyingGlassIcon,
+} from '@heroicons/react/24/outline';
+
+export const iconMap: Record<string, React.ComponentType<any>> = {
+  // kebab-case (from backend)
+  'pencil-square': PencilSquareIcon,
+  'document-text': DocumentTextIcon,
+  'academic-cap': AcademicCapIcon,
+  'sparkles': SparklesIcon,
+  'language': LanguageIcon,
+  'chart-bar': ChartBarIcon,
+  'check-badge': CheckBadgeIcon,
+  'magnifying-glass': MagnifyingGlassIcon,
+  'video-camera': VideoCameraIcon,
+  'calendar': CalendarIcon,
+  'chat-bubble-left-right': ChatBubbleLeftRightIcon,
+  'photograph': PhotoIcon,
+  'eye': EyeIcon,
+  'map': MapIcon,
+  'table-cells': TableCellsIcon,
+  'globe-alt': GlobeAltIcon,
+  'code-bracket': CodeBracketIcon,
+  'command-line': CommandLineIcon,
+  'newspaper': NewspaperIcon,
+  'film': FilmIcon,
+  'envelope-open': EnvelopeOpenIcon,
+  'megaphone': MegaphoneIcon,
+  'document-magnifying-glass': DocumentMagnifyingGlassIcon,
+  // PascalCase (legacy)
+  'BookOpenIcon': BookOpenIcon,
+  'DocumentIcon': DocumentIcon,
+  'RectangleStackIcon': RectangleStackIcon,
+  'CubeIcon': CubeIcon,
+  'ListBulletIcon': ListBulletIcon,
+  'ShieldCheckIcon': ShieldCheckIcon,
+  'ClipboardDocumentListIcon': ClipboardDocumentListIcon,
+  'KeyIcon': KeyIcon,
+  'HashtagIcon': HashtagIcon,
+  'DocumentDuplicateIcon': DocumentDuplicateIcon,
+  'CheckCircleIcon': CheckCircleIcon,
+  'FaceSmileIcon': FaceSmileIcon,
+  'DocumentTextIcon': DocumentTextIcon,
+  'AcademicCapIcon': AcademicCapIcon,
+  'SparklesIcon': SparklesIcon,
+  'LanguageIcon': LanguageIcon,
+  'MagnifyingGlassIcon': MagnifyingGlassIcon,
+};
+
+/** Resolve a backend icon name string to a Heroicon component. Falls back to SparklesIcon. */
+export const getToolIcon = (iconName: string): React.ComponentType<any> =>
+  iconMap[iconName] || SparklesIcon;
+
+export default iconMap;

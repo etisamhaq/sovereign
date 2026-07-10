@@ -1,0 +1,10 @@
+# Sovereign - AI Writing & Research Tools Platform
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /settings/
+
+# Sitemap
+Sitemap: https://sovereign.com/sitemap.xml

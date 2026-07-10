@@ -1,0 +1,46 @@
+slug: blog_from_research
+name: "Research → Blog Post"
+description: >
+  Research a topic and turn the resulting brief into a publication-ready blog
+  post with SEO meta-description and social snippets.
+is_premium: true
+inputs:
+  topic:
+    type: string
+    required: true
+  audience:
+    type: string
+    default: "general readers"
+  keywords:
+    type: string
+    default: ""
+steps:
+  - id: research
+    tool: research_topic
+    args:
+      topic: "{{ inputs.topic }}"
+      depth: standard
+
+  - id: outline
+    tool: generate_outline
+    args:
+      topic: "{{ inputs.topic }}"
+      outline_type: blog_post
+
+  - id: post
+    tool: generate_blog_post
+    args:
+      topic: "{{ inputs.topic }}"
+      tone: informative
+      length: medium
+      target_audience: "{{ inputs.audience }}"
+      keywords: "{{ inputs.keywords }}"
+
+  - id: meta
+    tool: generate_meta_description
+    args:
+      content: "{{ steps.post.output }}"
+      tone: professional
+      target_length: 155
+
+output: post

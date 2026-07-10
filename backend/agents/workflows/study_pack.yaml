@@ -1,0 +1,41 @@
+slug: study_pack
+name: "Topic → Study Pack"
+description: >
+  Generate a complete study kit for any topic: outline, summary, flashcards
+  and a practice quiz.
+inputs:
+  topic:
+    type: string
+    required: true
+  num_flashcards:
+    type: integer
+    default: 12
+  num_quiz:
+    type: integer
+    default: 5
+steps:
+  - id: outline
+    tool: generate_outline
+    args:
+      topic: "{{ inputs.topic }}"
+      outline_type: essay
+
+  - id: summary
+    tool: summarize_text
+    args:
+      text: "{{ steps.outline.output }}"
+      length: long
+
+  - id: flashcards
+    tool: generate_flashcards
+    args:
+      text: "{{ steps.summary.output }}"
+      count: "{{ inputs.num_flashcards }}"
+
+  - id: quiz
+    tool: generate_quiz
+    args:
+      text: "{{ steps.summary.output }}"
+      num_questions: "{{ inputs.num_quiz }}"
+
+output: summary

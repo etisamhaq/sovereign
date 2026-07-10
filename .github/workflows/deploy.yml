@@ -1,0 +1,172 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+
+# Prevent concurrent deployments
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  # ─────────────────────────────────────────────────────
+  # Job 1: Run backend tests before deploying
+  # ─────────────────────────────────────────────────────
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    env:
+      DJANGO_SETTINGS_MODULE: core.test_settings
+      SECRET_KEY: ci-test-secret-key-not-for-production
+      GROQ_API_KEY: fake-key-for-tests
+      SENDGRID_API_KEY: fake-key-for-tests
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-3.11-${{ hashFiles('backend/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-3.11-
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            tesseract-ocr \
+            libgl1 \
+            libglib2.0-0
+
+      - name: Install Python dependencies
+        working-directory: backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run pytest
+        working-directory: backend
+        run: |
+          python -m pytest \
+            --tb=short \
+            --strict-markers \
+            -q
+
+  # ─────────────────────────────────────────────────────
+  # Job 2: Deploy to EC2 after tests pass
+  # ─────────────────────────────────────────────────────
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+    needs: test
+    environment: production
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          command_timeout: 30m
+          script: |
+            set -e
+
+            PROJECT_DIR="/home/ubuntu/Sovereign-AI-Tools"
+            COMPOSE_FILE="docker-compose.yml"
+            TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+
+            echo "========================================="
+            echo "  Deployment started at $(date)"
+            echo "========================================="
+
+            cd "$PROJECT_DIR"
+
+            # ── 1. Pull latest code ──
+            echo ">>> Pulling latest code from main..."
+            git fetch origin main
+            git reset --hard origin/main
+
+            # ── 2. Backup database ──
+            echo ">>> Backing up database..."
+            mkdir -p backups
+            if docker compose ps db --format '{{.State}}' 2>/dev/null | grep -q "running"; then
+              docker compose exec -T db pg_dump -U ${DATABASE_USER:-aiwriting} ${DATABASE_NAME:-aiwriting} | gzip > "backups/pre_deploy_${TIMESTAMP}.sql.gz"
+              echo "    Database backed up to backups/pre_deploy_${TIMESTAMP}.sql.gz"
+            else
+              echo "    Database not running, skipping backup"
+            fi
+
+            # ── 3. Build new images ──
+            echo ">>> Building Docker images..."
+            docker compose -f $COMPOSE_FILE build
+
+            # ── 4. Stop and restart services ──
+            echo ">>> Restarting services..."
+            docker compose -f $COMPOSE_FILE up -d
+
+            # ── 5. Restart nginx to pick up new container IPs ──
+            echo ">>> Restarting nginx..."
+            sleep 10
+            docker compose -f $COMPOSE_FILE restart nginx
+
+            # ── Wait for everything to stabilize ──
+            echo ">>> Waiting for services to become healthy..."
+            sleep 10
+
+            # ── 6. Run migrations ──
+            echo ">>> Running database migrations..."
+            docker compose -f $COMPOSE_FILE exec -T backend python manage.py migrate --noinput
+
+            # ── 7. Collect static files ──
+            echo ">>> Collecting static files..."
+            docker compose -f $COMPOSE_FILE exec -T backend python manage.py collectstatic --noinput
+
+            # ── 8. Health checks ──
+            echo ">>> Running health checks..."
+            RETRIES=5
+            DELAY=5
+            HEALTHY=false
+
+            for i in $(seq 1 $RETRIES); do
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -L -k https://localhost/health 2>/dev/null || curl -s -o /dev/null -w "%{http_code}" http://localhost/health 2>/dev/null || echo "000")
+              if [ "$HTTP_CODE" = "200" ]; then
+                HEALTHY=true
+                break
+              fi
+              echo "    Health check attempt $i/$RETRIES returned $HTTP_CODE, retrying in ${DELAY}s..."
+              sleep $DELAY
+            done
+
+            if [ "$HEALTHY" = "true" ]; then
+              echo ">>> Health check PASSED"
+            else
+              echo ">>> WARNING: Health check did not return 200, but deployment continued."
+              echo "    Check service logs: docker compose logs"
+            fi
+
+            # ── 9. Clean up old images ──
+            echo ">>> Cleaning up dangling Docker images..."
+            docker image prune -f
+
+            # ── 10. Show status ──
+            echo ""
+            echo "========================================="
+            echo "  Deployment completed at $(date)"
+            echo "========================================="
+            docker compose -f $COMPOSE_FILE ps
+
+            # ── 11. Clean up old backups (keep last 30) ──
+            cd backups
+            ls -t *.sql.gz 2>/dev/null | tail -n +31 | xargs rm -f 2>/dev/null || true

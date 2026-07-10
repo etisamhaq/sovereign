@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Sovereign</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #4a5568;
+            margin: 0;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #4f46e5;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+        .feature {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f7fafc;
+            border-radius: 6px;
+        }
+        .feature h3 {
+            margin-top: 0;
+            color: #2d3748;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Sovereign</h1>
+        </div>
+        
+        <h2>Welcome {{ user.get_short_name }}! 🎉</h2>
+        
+        <p>Thank you for joining Sovereign. We're excited to have you as part of our community of creators using 100+ AI tools in one platform.</p>
+        
+        <p>With your free account, you get:</p>
+        
+        <div class="feature">
+            <h3>✨ 200 Free Uses Per Month</h3>
+            <p>Access all our AI-powered writing tools to enhance your content.</p>
+        </div>
+        
+        <div class="feature">
+            <h3>📝 100+ AI Tools</h3>
+            <p>Writing, education, research, and productivity tools - all in one platform for just $5/month with unlimited usage.</p>
+        </div>
+        
+        <div class="feature">
+            <h3>💾 Save Your Work</h3>
+            <p>Store and organize your documents, access them anytime.</p>
+        </div>
+        
+        <div style="text-align: center;">
+            <a href="{{ domain }}/tools" class="button">Explore Tools</a>
+        </div>
+        
+        <h3>Getting Started</h3>
+        <ol>
+            <li>Browse our collection of AI-powered tools</li>
+            <li>Select a tool that fits your needs</li>
+            <li>Enter your text and let AI work its magic</li>
+            <li>Save your results for future reference</li>
+        </ol>
+        
+        <p>Need more power? <a href="{{ domain }}/pricing">Upgrade to Pro</a> for just $5/month with unlimited access to all tools.</p>
+        
+        <div class="footer">
+            <p>If you have any questions, feel free to <a href="{{ domain }}/contact">contact us</a>.</p>
+            <p>&copy; 2024 Sovereign. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

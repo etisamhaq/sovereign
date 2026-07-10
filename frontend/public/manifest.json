@@ -1,0 +1,27 @@
+{
+  "short_name": "Sovereign",
+  "name": "Sovereign — 33+ AI Writing & Research Tools",
+  "description": "AI-powered platform with 33+ tools for writing, research, education, and productivity.",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#6366f1",
+  "background_color": "#ffffff",
+  "categories": ["productivity", "education", "utilities"]
+}

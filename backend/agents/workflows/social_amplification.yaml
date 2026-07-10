@@ -1,0 +1,47 @@
+slug: social_amplification
+name: "Long-form → Social Pack"
+description: >
+  Take any long-form draft (blog post, essay, newsletter) and produce a
+  Twitter thread + LinkedIn post + Instagram caption + YouTube hook.
+inputs:
+  content:
+    type: string
+    required: true
+  target_audience:
+    type: string
+    default: "professionals"
+steps:
+  - id: summary
+    tool: summarize_text
+    args:
+      text: "{{ inputs.content }}"
+      length: bullets
+
+  - id: linkedin
+    tool: generate_ad_copy
+    args:
+      product_or_service: "{{ inputs.content }}"
+      platform: linkedin
+      target_audience: "{{ inputs.target_audience }}"
+      tone: thoughtful
+      num_variations: 1
+
+  - id: instagram
+    tool: generate_ad_copy
+    args:
+      product_or_service: "{{ inputs.content }}"
+      platform: instagram
+      target_audience: "{{ inputs.target_audience }}"
+      tone: energetic
+      num_variations: 1
+
+  - id: youtube_hook
+    tool: generate_youtube_script
+    args:
+      topic: "{{ inputs.content }}"
+      duration: "1"
+      style: hook-only
+      target_audience: "{{ inputs.target_audience }}"
+      include_hooks: true
+
+output: summary

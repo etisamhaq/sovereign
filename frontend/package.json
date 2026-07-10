@@ -1,0 +1,82 @@
+{
+  "name": "sovereign-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@headlessui/react": "^2.2.4",
+    "@heroicons/react": "^2.2.0",
+    "@polar-sh/sdk": "^0.34.5",
+    "@react-oauth/google": "^0.13.4",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
+    "@tanstack/react-query": "^5.83.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.126",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.10.0",
+    "chart.js": "^4.5.0",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.23.6",
+    "react": "^19.1.0",
+    "react-chartjs-2": "^5.3.0",
+    "react-dom": "^19.1.0",
+    "react-helmet-async": "^3.0.0",
+    "react-hook-form": "^7.60.0",
+    "react-hot-toast": "^2.5.2",
+    "react-markdown": "^10.1.0",
+    "react-router-dom": "^7.7.0",
+    "react-scripts": "5.0.1",
+    "recharts": "^3.1.0",
+    "remark-gfm": "^4.0.1",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4",
+    "zustand": "^5.0.6"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(axios|react-markdown|remark-.+|rehype-.+|micromark|micromark-.+|decode-named-character-reference|character-entities|property-information|hast-util-.+|html-url-attributes|mdast-util-.+|space-separated-tokens|comma-separated-tokens|unist-util-.+|unified|bail|is-plain-obj|trough|vfile|vfile-message|trim-lines|estree-util-.+|hastscript|trough|web-namespaces|zwitch|ccount|markdown-table|longest-streak|escape-string-regexp|stringify-entities|character-reference-invalid|is-decimal|is-hexadecimal|is-alphanumerical|is-alphabetical|parse-entities|character-entities-html4|character-entities-legacy|github-slugger|devlop|react-router|react-router-dom|@remix-run|set-cookie-parser|cookie|turbo-stream)/)"
+    ],
+    "moduleNameMapper": {
+      "^react-router-dom$": "<rootDir>/node_modules/react-router-dom/dist/index.js",
+      "^react-router/dom$": "<rootDir>/node_modules/react-router/dist/development/dom-export.js",
+      "^react-router$": "<rootDir>/node_modules/react-router/dist/development/index.js",
+      "^react-markdown$": "<rootDir>/src/__mocks__/reactMarkdown.tsx",
+      "^remark-gfm$": "<rootDir>/src/__mocks__/remarkGfm.ts"
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6"
+  }
+}

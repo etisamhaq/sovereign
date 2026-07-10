@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#6366f1" />
+    <meta
+      name="description"
+      content="Sovereign — 33+ AI-powered tools for writing, research, education, and productivity. Paraphrase, grammar check, summarize, generate essays, and more. All for just $5/month."
+    />
+
+    <!-- SEO Meta Tags -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="https://sovereign.com" />
+    <meta name="author" content="Sovereign" />
+    <meta name="keywords" content="AI writing tools, AI paraphrase tool, grammar checker, text summarizer, essay writer, citation generator, research assistant, AI productivity tools, content writing AI" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sovereign.com/" />
+    <meta property="og:title" content="Sovereign — 33+ AI-Powered Writing & Research Tools" />
+    <meta property="og:description" content="Access 33+ AI tools in a single platform — paraphrase, grammar check, summarize, write essays, generate citations, and more. Free tier available." />
+    <meta property="og:image" content="https://sovereign.com/og-image.png" />
+    <meta property="og:site_name" content="Sovereign" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Sovereign — 33+ AI-Powered Writing & Research Tools" />
+    <meta name="twitter:description" content="Access 33+ AI tools in a single platform — paraphrase, grammar check, summarize, write essays, generate citations, and more." />
+    <meta name="twitter:image" content="https://sovereign.com/og-image.png" />
+
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <title>Sovereign — 33+ AI-Powered Writing & Research Tools</title>
+
+    <!-- JSON-LD Organization Schema (default) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Sovereign",
+      "url": "https://sovereign.com",
+      "logo": "https://sovereign.com/logo512.png",
+      "description": "AI-powered platform with 33+ tools for writing, research, education, and productivity.",
+      "sameAs": []
+    }
+    </script>
+
+    <!-- JSON-LD WebSite Schema for Sitelinks Search Box -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Sovereign",
+      "url": "https://sovereign.com",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://sovereign.com/tools?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <script>
+      // Apply dark mode immediately to prevent flash of light mode
+      (function() {
+        try {
+          var theme = localStorage.getItem('theme');
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <h1>Sovereign — AI-Powered Writing & Research Tools</h1>
+      <p>Sovereign offers 33+ AI tools for writing, research, education, and productivity. Visit our tools: paraphrase, grammar check, summarizer, essay writer, citation generator, and more.</p>
+      <p>You need to enable JavaScript to use this application.</p>
+    </noscript>
+    <div id="root"></div>
+  </body>
+</html>
