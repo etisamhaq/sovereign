@@ -46,8 +46,13 @@ LOGGING = {
     },
 }
 
-# Security settings
-SECURE_SSL_REDIRECT = True
+# Security settings.
+# Railway terminates TLS at its edge and upgrades HTTP→HTTPS there, so Django's
+# own SSL redirect is redundant AND breaks the platform's internal HTTP
+# healthcheck (it would 301 the /health probe). Default it OFF; opt back in via
+# env if serving without an HTTPS-terminating proxy. /health is always exempt.
+SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT', 'False') == 'True'
+SECURE_REDIRECT_EXEMPT = [r'^health$']
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_BROWSER_XSS_FILTER = True
