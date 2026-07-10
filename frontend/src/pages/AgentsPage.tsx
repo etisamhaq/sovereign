@@ -377,31 +377,31 @@ const AgentsPage: React.FC = () => {
   const { data: runsData, isFetching: runsRefreshing } = useQuery<{ count: number; results: RunItem[] }>({
     queryKey: ['agent-runs'],
     queryFn: () => apiClient.get('/agents/runs/'),
-    refetchInterval: 5000,
+    refetchInterval: false,
   });
 
   const { data: approvals } = useQuery<ApprovalItem[]>({
     queryKey: ['agent-approvals'],
     queryFn: () => apiClient.get('/agents/approvals/'),
-    refetchInterval: 5000,
+    refetchInterval: false,
   });
 
   const { data: dashboard } = useQuery<Dashboard>({
     queryKey: ['agent-dashboard'],
     queryFn: () => apiClient.get('/agents/dashboard/'),
-    refetchInterval: 10000,
+    refetchInterval: false,
   });
 
   const { data: sloDashboard } = useQuery<SLODashboard>({
     queryKey: ['agent-dashboard-slo'],
     queryFn: () => apiClient.get<SLODashboard>('/agents/dashboard/slo/?window_hours=24'),
-    refetchInterval: 15000,
+    refetchInterval: false,
   });
 
   const { data: triggers } = useQuery<TriggerItem[]>({
     queryKey: ['agent-triggers'],
     queryFn: () => apiClient.get('/agents/triggers/'),
-    refetchInterval: 10000,
+    refetchInterval: false,
   });
 
   const { data: builderTemplateDetail, isFetching: isBuilderTemplateLoading } = useQuery<TemplateDetail>({
@@ -414,37 +414,37 @@ const AgentsPage: React.FC = () => {
     queryKey: ['agent-template-versions', builderTemplateSlug],
     queryFn: () => apiClient.get<TemplateVersionItem[]>(`/agents/templates/${builderTemplateSlug}/versions/`),
     enabled: !!builderTemplateSlug,
-    refetchInterval: 10000,
+    refetchInterval: false,
   });
 
   const { data: reliabilityAlerts } = useQuery<ReliabilityAlertItem[]>({
     queryKey: ['agent-reliability-alerts'],
     queryFn: () => apiClient.get<ReliabilityAlertItem[]>('/agents/alerts/?status=open'),
-    refetchInterval: 10000,
+    refetchInterval: false,
   });
 
   const { data: traceDashboard } = useQuery<TraceDashboard>({
     queryKey: ['agent-dashboard-traces'],
     queryFn: () => apiClient.get<TraceDashboard>('/agents/dashboard/traces/?limit=25'),
-    refetchInterval: 15000,
+    refetchInterval: false,
   });
 
   const { data: connectors } = useQuery<ConnectorItem[]>({
     queryKey: ['agent-connectors'],
     queryFn: () => apiClient.get<ConnectorItem[]>('/agents/connectors/'),
-    refetchInterval: 15000,
+    refetchInterval: false,
   });
 
   const { data: paymentDashboard } = useQuery<PaymentDashboard>({
     queryKey: ['payments-dashboard'],
     queryFn: () => apiClient.get<PaymentDashboard>('/payments/dashboard/'),
-    refetchInterval: 20000,
+    refetchInterval: false,
   });
 
   const { data: marketplaceAnalytics } = useQuery<MarketplaceAnalytics>({
     queryKey: ['agent-marketplace-analytics'],
     queryFn: () => apiClient.get<MarketplaceAnalytics>('/agents/marketplace/analytics/'),
-    refetchInterval: 20000,
+    refetchInterval: false,
   });
 
   useEffect(() => {
