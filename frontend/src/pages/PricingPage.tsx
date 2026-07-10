@@ -15,19 +15,19 @@ const plans = [
     price: 0,
     period: 'forever',
     features: [
-      '50 uses per month',
-      '12 AI writing & utility tools',
-      'Paraphrase, Grammar Check, Summarizer',
-      'Translator, Title & Outline Generator',
-      'Citation Generator, Flashcard Creator',
+      '20 audits & tool runs per month',
+      'GDPR, HIPAA & SOC 2 rulesets',
+      'Cited, severity-ranked risk reports',
+      'Fireworks (managed) inference',
+      '12 document & writing tools',
       'Standard processing speed',
     ],
     limitations: [
-      'No access to premium tools',
-      '50 monthly usage cap',
+      'No self-hosted AMD (private) provider',
+      '20 monthly run cap',
       'No priority support',
     ],
-    cta: 'Get Started Free',
+    cta: 'Start free',
     popular: false,
   },
   {
@@ -37,14 +37,14 @@ const plans = [
     productId: BRAND.polar.proProductId,
     priceId: BRAND.polar.proPriceId,
     features: [
-      '2,000 uses per month',
-      'All 38+ AI tools included',
-      'Essay Writer, Quiz Generator, Research Assistant',
-      'VisiSense AI, Video Chat, Image Comparison',
-      'Content Calendar, Course Outline Creator',
+      '2,000 audits & tool runs per month',
+      'Self-host on your own AMD Instinct GPUs (private)',
+      'Provider toggle: AMD · Fireworks · Groq',
+      'All 30+ tools + multi-step agent workflows',
+      'Downloadable audit reports (Markdown)',
       'Priority processing speed',
       'Priority email support',
-      'Early access to new features',
+      'Early access to new rulesets',
     ],
     cta: 'Upgrade to Pro',
     popular: true,
@@ -91,9 +91,9 @@ const PricingPage: React.FC = () => {
     <div className="bg-white dark:bg-gray-900">
       <SEOHead
         title="Pricing"
-        description="Simple, transparent pricing for Sovereign. Free tier with 50 uses/month or Pro at $5/month for 2,000 uses across all 33+ AI tools."
+        description="Sovereign pricing. Start free with managed audits, or go Pro to self-host the compliance agent on your own AMD Instinct GPUs."
         canonical="/pricing"
-        keywords="Sovereign pricing, AI tools pricing, cheap AI tools, AI writing subscription, $5 AI tools"
+        keywords="Sovereign pricing, compliance audit pricing, private LLM, self-hosted AI, GDPR HIPAA SOC 2 tool"
       />
       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-16 sm:py-24">
         <motion.div
@@ -102,11 +102,11 @@ const PricingPage: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="mx-auto max-w-4xl text-center"
         >
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
-            Simple, Transparent Pricing
+          <h1 className="font-display text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+            Simple, transparent pricing
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
-            Choose the plan that's right for you. Upgrade or downgrade at any time.
+            Start free on the managed path, or go Pro to self-host audits on your own AMD GPUs. Change plans anytime.
           </p>
         </motion.div>
 

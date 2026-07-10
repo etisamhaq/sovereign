@@ -3,12 +3,10 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { usePageTitle } from '../hooks/usePageTitle';
 import SEOHead from '../components/SEOHead';
-import { useAuthStore } from '../store/authStore';
 import {
   SparklesIcon,
   BoltIcon,
   ShieldCheckIcon,
-  CurrencyDollarIcon,
   DocumentTextIcon,
   AcademicCapIcon,
   GlobeAltIcon,
@@ -23,29 +21,27 @@ import {
 } from '@heroicons/react/24/outline';
 
 const FeaturesPage: React.FC = () => {
-  usePageTitle('Features', 'Discover Sovereign\'s 33+ AI-powered tools for writing, education, research, SEO, and productivity. Lightning fast, private, and affordable.');
-  const { isAuthenticated } = useAuthStore();
-  const ctaLink = isAuthenticated ? '/dashboard' : '/register';
+  usePageTitle('Features', 'A self-hosted AI agent that audits contracts and policies against GDPR, HIPAA, and SOC 2 — privately, on your own AMD Instinct GPUs. Plus a full toolkit of document and research tools.');
   const mainFeatures = [
     {
-      name: '33+ AI Tools',
-      description: 'Access a comprehensive suite of AI-powered writing tools for every content need.',
-      icon: SparklesIcon,
+      name: 'Private by design',
+      description: 'Audits run an open model on your own AMD Instinct GPUs via vLLM/ROCm — confidential documents never reach a third-party API.',
+      icon: LockClosedIcon,
     },
     {
-      name: 'Lightning Fast',
-      description: 'Generate high-quality content in seconds, not hours. Save time and boost productivity.',
-      icon: BoltIcon,
-    },
-    {
-      name: 'Always Accurate',
-      description: 'Powered by advanced AI models to ensure accuracy and relevance in every output.',
+      name: 'Cited compliance findings',
+      description: 'Every gap is mapped to a specific GDPR, HIPAA, or SOC 2 article or control, with the evidence quoted straight from your document.',
       icon: ShieldCheckIcon,
     },
     {
-      name: 'Affordable Pricing',
-      description: 'Just $5/month for access to all tools. No hidden fees or surprises.',
-      icon: CurrencyDollarIcon,
+      name: 'One toggle, many providers',
+      description: 'Run the same audit on AMD (private), Fireworks (fast), or Groq — with automatic fallback if a provider is down.',
+      icon: BoltIcon,
+    },
+    {
+      name: 'More than an auditor',
+      description: 'The same private agent runtime powers 30+ document, research, and writing tools and multi-step workflows.',
+      icon: SparklesIcon,
     },
   ];
 
@@ -114,23 +110,23 @@ const FeaturesPage: React.FC = () => {
   const benefits = [
     {
       icon: ClockIcon,
-      title: 'Save Hours Daily',
-      description: 'Reduce content creation time by up to 90% with our AI-powered tools.'
+      title: 'Audit in minutes',
+      description: 'Turn a manual, expensive compliance review into a cited risk report you can produce on demand.'
     },
     {
       icon: UserGroupIcon,
-      title: 'Increase Productivity',
-      description: 'Complete writing tasks 10x faster with AI assistance and automation.'
+      title: 'Built for regulated teams',
+      description: 'Legal, healthcare, security, and compliance teams that cannot send documents to a public API.'
     },
     {
       icon: CloudArrowUpIcon,
-      title: 'Cloud-Based Platform',
-      description: 'Access your work from anywhere, anytime. All your content is securely stored.'
+      title: 'Runs on your infrastructure',
+      description: 'Self-host the agent on AMD Developer Cloud or your own AMD Instinct GPUs via vLLM/ROCm.'
     },
     {
       icon: LockClosedIcon,
-      title: 'Privacy First',
-      description: 'Your data is encrypted and never shared. We respect your privacy and content ownership.'
+      title: 'Data sovereignty',
+      description: 'Confidential documents are processed entirely inside your environment and never used for training.'
     }
   ];
 
@@ -182,12 +178,13 @@ const FeaturesPage: React.FC = () => {
             transition={{ duration: 0.5 }}
             className="text-center"
           >
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
-              Everything You Need to Write Better
+            <h1 className="font-display text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
+              Compliance auditing, kept private
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
-              Discover our comprehensive suite of AI-powered tools designed to transform
-              your writing experience. From essays to emails, we've got you covered.
+              Sovereign audits your contracts and policies against GDPR, HIPAA, and SOC 2 — running on
+              your own AMD GPUs so nothing leaves your infrastructure. And it's built on a full agent
+              platform with 30+ document and research tools.
             </p>
           </motion.div>
         </div>
@@ -234,11 +231,11 @@ const FeaturesPage: React.FC = () => {
             transition={{ delay: 0.4 }}
             className="mx-auto max-w-2xl text-center mb-16"
           >
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
-              33+ Specialized Tools
+            <h2 className="font-display text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+              A full toolkit behind the audit
             </h2>
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-              Every tool you need for any writing task, all in one platform
+              Beyond compliance, the same private runtime ships 30+ document and research tools
             </p>
           </motion.div>
 
@@ -283,11 +280,11 @@ const FeaturesPage: React.FC = () => {
             transition={{ delay: 0.5 }}
             className="mx-auto max-w-2xl text-center mb-16"
           >
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
-              Our Top Tools
+            <h2 className="font-display text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+              Popular tools
             </h2>
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-              Discover our most popular AI-powered tools that save you time and boost productivity
+              A few of the document and research tools that ship alongside the compliance auditor
             </p>
           </motion.div>
 
@@ -331,11 +328,11 @@ const FeaturesPage: React.FC = () => {
             transition={{ delay: 0.6 }}
             className="mx-auto max-w-2xl text-center mb-16"
           >
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
-              Why Choose Sovereign?
+            <h2 className="font-display text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+              Why teams choose Sovereign
             </h2>
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-              More than just tools - a complete content creation ecosystem
+              Compliance-grade AI you can run without handing your data to anyone
             </p>
           </motion.div>
 
@@ -372,19 +369,19 @@ const FeaturesPage: React.FC = () => {
       >
         <div className="px-6 py-16 sm:px-6 sm:py-24 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Ready to Transform Your Writing?
+            <h2 className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              Run your first private audit
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-primary-100">
-              Join thousands who are already creating amazing content with Sovereign.
-              Start your free trial today - no credit card required.
+              Check a contract or policy against GDPR, HIPAA, or SOC 2 on your own AMD GPUs —
+              your documents never leave your infrastructure.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
-                to={ctaLink}
+                to="/compliance"
                 className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-primary-600 shadow-sm hover:bg-primary-50"
               >
-                {isAuthenticated ? 'Go to Dashboard' : 'Start Free Trial'}
+                Run a compliance audit
               </Link>
               <Link
                 to="/pricing"

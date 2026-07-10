@@ -12,14 +12,11 @@ import {
   AcademicCapIcon,
   MagnifyingGlassCircleIcon,
   PhotoIcon,
-  BeakerIcon,
   ChartBarIcon,
   ArrowRightIcon,
   BoltIcon,
   GlobeAltIcon,
   ShieldCheckIcon,
-  CurrencyDollarIcon,
-  ClockIcon,
   ArrowTopRightOnSquareIcon,
   LockClosedIcon,
   DocumentMagnifyingGlassIcon
@@ -121,53 +118,53 @@ const HomePage: React.FC = () => {
 
   const features = [
     {
-      name: 'Instant AI Processing',
-      description: 'Get results in seconds with our advanced AI models',
-      icon: BoltIcon,
+      name: 'Your data never leaves',
+      description: 'Audits run on an open model on your own AMD Instinct GPUs — documents never reach a third-party API',
+      icon: LockClosedIcon,
     },
     {
-      name: 'Multi-language Support',
-      description: 'Work with content in 20+ languages seamlessly',
-      icon: GlobeAltIcon,
-    },
-    {
-      name: 'Privacy Focused',
-      description: 'Your data is secure and never used for training',
+      name: 'Cited, ranked findings',
+      description: 'Every gap is mapped to a specific GDPR / HIPAA / SOC 2 article or control, with evidence quoted from your document',
       icon: ShieldCheckIcon,
     },
     {
-      name: 'Affordable Pricing',
-      description: 'All 33+ tools for just $5/month with generous usage limits',
-      icon: CurrencyDollarIcon,
+      name: 'Provider toggle',
+      description: 'Switch the same audit between AMD-private, Fireworks-fast, and Groq with automatic fallback',
+      icon: BoltIcon,
+    },
+    {
+      name: 'A full agent platform',
+      description: 'Compliance is the flagship — the runtime also powers 30+ document, research, and writing tools',
+      icon: GlobeAltIcon,
     },
   ];
 
   const stats = [
-    { label: 'AI Tools Available', value: '33+', icon: BeakerIcon },
-    { label: 'Time Saved Daily', value: '2+ hrs', icon: ClockIcon },
-    { label: 'Languages Supported', value: '20+', icon: GlobeAltIcon },
+    { label: 'Frameworks: GDPR, HIPAA, SOC 2', value: '3', icon: ShieldCheckIcon },
+    { label: 'Documents sent to third-party APIs', value: 'Zero', icon: LockClosedIcon },
+    { label: 'Providers, one toggle: AMD · Fireworks · Groq', value: '3', icon: BoltIcon },
   ];
 
   const faqs = [
     {
       question: 'What is Sovereign?',
-      answer: 'Sovereign is an all-in-one AI platform offering 33+ tools for writing, education, productivity, and content creation. All tools are powered by advanced AI models.'
+      answer: 'Sovereign is a self-hosted AI agent that audits your contracts and policies against GDPR, HIPAA, and SOC 2, then returns a cited, severity-ranked risk report. It runs on the same private agent platform that also powers 30+ document and research tools.'
     },
     {
-      question: 'How much does it cost?',
-      answer: 'Just $5/month for access to all 33+ tools with up to 2,000 uses per month. No hidden fees. Cancel anytime.'
+      question: 'How is my data kept private?',
+      answer: 'The audit agent runs an open model on your own AMD Instinct GPUs via vLLM/ROCm, so confidential documents are processed entirely inside your infrastructure and never reach a third-party API. A faster managed path (Fireworks) is available when privacy is not the priority — you choose per audit with a single toggle.'
     },
     {
-      question: 'Do I need technical knowledge?',
-      answer: 'No! All our tools are designed to be user-friendly. Simply input your text or requirements, and let AI do the work.'
+      question: 'Which regulations can it check?',
+      answer: 'Out of the box: GDPR, HIPAA, and SOC 2, each as a cited ruleset. Every finding is mapped to a specific article or control with the evidence quoted from your document. New frameworks are added as rule packs.'
     },
     {
-      question: 'Is my data secure?',
-      answer: 'Yes, we take privacy seriously. Your data is encrypted, never shared with third parties, and not used for AI training.'
+      question: 'Do I need technical knowledge to run an audit?',
+      answer: 'No. Paste or upload a document, pick a framework and a provider, and run the audit. You get a risk score, severity-ranked findings with recommendations, and a downloadable report.'
     },
     {
-      question: 'Can I try it for free?',
-      answer: 'Yes! You can try our tools with limited usage before subscribing. No credit card required for the free trial.'
+      question: 'What else can Sovereign do?',
+      answer: 'Beyond compliance, the platform includes 30+ writing, research, and analysis tools plus a multi-step agent runtime — all routed through the same private, multi-provider engine.'
     }
   ];
 
@@ -384,18 +381,18 @@ const HomePage: React.FC = () => {
       {/* Marketplace teaser */}
       <div className="py-10 bg-white dark:bg-gray-900 border-y border-gray-100 dark:border-gray-800">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 p-6 border border-indigo-100 dark:border-indigo-800">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-primary-50 to-emerald-50 dark:from-primary-900/20 dark:to-emerald-900/20 p-6 border border-primary-100 dark:border-primary-800">
             <div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">New: Sovereign Marketplace</h3>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Build your own private agents</h3>
               <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                Access curated external AI tools like Prepza, Logiforge, Vixora, and Slideo.
+                Compose multi-step agents and workflows on the same private runtime — share and discover them in the marketplace.
               </p>
             </div>
             <Link
               to="/marketplace"
-              className="inline-flex items-center rounded-lg bg-indigo-600 px-4 py-2.5 text-white font-semibold hover:bg-indigo-500 transition-colors"
+              className="inline-flex items-center rounded-lg bg-primary-600 px-4 py-2.5 text-white font-semibold hover:bg-primary-500 transition-colors"
             >
-              Explore Marketplace
+              Explore the marketplace
               <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-2" />
             </Link>
           </div>
@@ -403,7 +400,7 @@ const HomePage: React.FC = () => {
       </div>
 
       {/* Interactive Stats Section */}
-      <div className="py-24 bg-gradient-to-r from-primary-600 to-purple-600">
+      <div className="py-24 bg-gradient-to-r from-gray-900 via-primary-900 to-gray-900">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
             {stats.map((stat, index) => (
@@ -428,12 +425,13 @@ const HomePage: React.FC = () => {
       <div className="py-24 bg-white dark:bg-gray-900">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-base font-semibold leading-7 text-primary-600">Find Your Tools</h2>
-            <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
-              AI Tools Tailored to Your Workflow
+            <h2 className="text-base font-semibold leading-7 text-primary-600">Who uses Sovereign</h2>
+            <p className="mt-2 font-display text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+              Built for teams who can't leak data
             </p>
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-              Whether you're a student, content creator, or professional — discover the tools that matter most to you.
+              Legal, healthcare, security, and compliance teams use Sovereign to review documents — plus the
+              wider toolkit for everyday writing and research, all on private infrastructure.
             </p>
           </div>
 
@@ -710,19 +708,19 @@ const HomePage: React.FC = () => {
       </div>
 
       {/* Final CTA Section */}
-      <div className="relative isolate overflow-hidden bg-gradient-to-br from-primary-600 via-purple-600 to-pink-600 px-6 py-24 sm:px-24 xl:py-32">
-        <h2 className="mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-white sm:text-4xl">
-          Ready to Transform Your Workflow?
+      <div className="relative isolate overflow-hidden bg-gradient-to-br from-gray-950 via-primary-900 to-gray-950 px-6 py-24 sm:px-24 xl:py-32">
+        <h2 className="mx-auto max-w-2xl text-center font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          Audit your first document in minutes
         </h2>
-        <p className="mx-auto mt-2 max-w-xl text-center text-lg leading-8 text-white/90">
-          Save hours every day with Sovereign's comprehensive AI tools.
+        <p className="mx-auto mt-3 max-w-xl text-center text-lg leading-8 text-white/90">
+          Run a GDPR, HIPAA, or SOC 2 audit on your own AMD GPUs — nothing leaves your infrastructure.
         </p>
         <div className="mt-10 flex items-center justify-center gap-4">
           <Link
-            to={ctaLink}
-            className="rounded-xl bg-white px-8 py-4 text-base font-semibold text-primary-600 shadow-lg hover:bg-gray-100 transform hover:-translate-y-0.5 transition-all duration-200"
+            to={auditLink}
+            className="rounded-xl bg-primary-500 px-8 py-4 text-base font-semibold text-gray-950 shadow-lg hover:bg-primary-400 transform hover:-translate-y-0.5 transition-all duration-200"
           >
-            {isAuthenticated ? 'Go to Dashboard' : 'Start Your Free Trial'}
+            Run a compliance audit
           </Link>
           <Link
             to="/pricing"

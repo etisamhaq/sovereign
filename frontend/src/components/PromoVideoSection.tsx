@@ -87,18 +87,18 @@ const PromoVideoSection: React.FC<PromoVideoSectionProps> = ({ ctaLink }) => {
             <p className="text-sm font-semibold tracking-wide uppercase text-primary-600 dark:text-primary-400">
               Product Demo
             </p>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">
-              See how Sovereign works in 60 seconds
+            <h2 className="mt-3 font-display text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">
+              See a compliance audit in 60 seconds
             </h2>
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-              Watch a real workflow from idea to polished output, then start your free account and get immediate value.
+              Watch a contract go from upload to a cited, severity-ranked risk report — audited privately on AMD Instinct GPUs.
             </p>
 
             <ul className="mt-6 space-y-3">
               {[
-                'Understand all key features quickly',
-                'See real output quality before signing up',
-                'Learn the fastest workflow to get started',
+                'Upload a contract or policy and pick a framework',
+                'Toggle between AMD-private and Fireworks-fast inference',
+                'Get a cited risk report you can export',
               ].map((item) => (
                 <li key={item} className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
                   <CheckIcon className="h-5 w-5 text-green-500" />
@@ -113,11 +113,11 @@ const PromoVideoSection: React.FC<PromoVideoSectionProps> = ({ ctaLink }) => {
                 className="inline-flex items-center rounded-lg bg-primary-600 px-5 py-3 text-white font-semibold hover:bg-primary-500 transition-colors"
               >
                 <PlayCircleIcon className="h-5 w-5 mr-2" />
-                Watch 60-sec Demo
+                Watch 60-sec demo
               </button>
 
               <Link
-                to={ctaLink}
+                to="/compliance"
                 onClick={() =>
                   analytics.trackEvent('video_section_cta_click', {
                     category: 'conversion',
@@ -126,7 +126,7 @@ const PromoVideoSection: React.FC<PromoVideoSectionProps> = ({ ctaLink }) => {
                 }
                 className="inline-flex items-center rounded-lg bg-gray-100 dark:bg-gray-800 px-5 py-3 text-gray-900 dark:text-white font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
               >
-                Start Free
+                Try the audit
               </Link>
             </div>
           </div>
@@ -147,8 +147,8 @@ const PromoVideoSection: React.FC<PromoVideoSectionProps> = ({ ctaLink }) => {
                   onError={() => setPosterFailed(true)}
                 />
               ) : (
-                <div className="w-full aspect-video bg-gradient-to-br from-primary-600 to-purple-600 flex items-center justify-center">
-                  <p className="text-white text-lg font-semibold">Sovereign Demo</p>
+                <div className="w-full aspect-video bg-gradient-to-br from-gray-950 via-primary-900 to-gray-900 flex items-center justify-center">
+                  <p className="font-display text-white text-lg font-semibold">Sovereign — compliance audit demo</p>
                 </div>
               )}
 
