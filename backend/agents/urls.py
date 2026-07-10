@@ -1,5 +1,6 @@
 from django.urls import include, path
 from . import views
+from . import compliance_views
 
 app_name = 'agents'
 
@@ -8,6 +9,10 @@ urlpatterns = [
     # with the enterprise control-plane routes below (workspaces / templates /
     # runs / tools / marketplace).
     path('chat/', include('agents.chat_urls', namespace='chat')),
+
+    # Sovereign compliance audit (the flagship capability).
+    path('compliance/frameworks/', compliance_views.ComplianceFrameworksView.as_view(), name='compliance-frameworks'),
+    path('compliance/audit/', compliance_views.ComplianceAuditView.as_view(), name='compliance-audit'),
 
     path('workspaces/', views.AgentWorkspaceListCreateView.as_view(), name='workspace-list-create'),
     path('workspaces/<slug:workspace_slug>/members/', views.AgentWorkspaceMembershipListCreateView.as_view(), name='workspace-members'),

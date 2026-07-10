@@ -182,3 +182,65 @@ def test_compliance_audit_workflow_end_to_end(monkeypatch):
     assert run.status == 'completed'
     # The intermediate audit step produced the structured dict the report consumed.
     assert run.outputs['state']['steps']['audit']['output']['framework'] == 'gdpr'
+
+
+# ─── REST API ──────────────────────────────────────────────────────────────
+
+@pytest.mark.django_db
+def test_compliance_api_audit_and_frameworks(monkeypatch):
+    from django.contrib.auth import get_user_model
+    from rest_framework.test import APIClient
+
+    from agents import compliance_views
+
+    monkeypatch.setattr(compliance, 'get_router', lambda: _StubRouter(_CANNED))
+
+    user = get_user_model().objects.create_user(email='api@example.com', password='pw12345!')
+    client = APIClient()
+    client.force_authenticate(user=user)
+
+    # frameworks list
+    res = client.get('/api/agents/compliance/frameworks/')
+    assert res.status_code == 200
+    frameworks = {f['framework'] for f in res.json()['frameworks']}
+    assert {'gdpr', 'hipaa', 'soc2'} <= frameworks
+
+    # audit
+    res = client.post('/api/agents/compliance/audit/', {
+        'document_text': 'Acme privacy policy text.',
+        'framework': 'gdpr',
+        'provider': 'fireworks',
+        'document_name': 'Acme Policy',
+    }, format='json')
+    assert res.status_code == 200, res.content
+    body = res.json()
+    assert body['framework'] == 'gdpr'
+    assert body['provider_used'] == 'fireworks'
+    assert len(body['findings']) == len(compliance.load_ruleset('gdpr')['rules'])
+    assert '# Compliance Audit — Acme Policy' in body['report_markdown']
+
+
+@pytest.mark.django_db
+def test_compliance_api_rejects_bad_input(monkeypatch):
+    from django.contrib.auth import get_user_model
+    from rest_framework.test import APIClient
+
+    monkeypatch.setattr(compliance, 'get_router', lambda: _StubRouter(_CANNED))
+    user = get_user_model().objects.create_user(email='api2@example.com', password='pw12345!')
+    client = APIClient()
+    client.force_authenticate(user=user)
+
+    # empty document -> 400
+    assert client.post('/api/agents/compliance/audit/',
+                       {'document_text': '   '}, format='json').status_code == 400
+    # bad provider -> 400
+    assert client.post('/api/agents/compliance/audit/',
+                       {'document_text': 'x', 'provider': 'hackercloud'}, format='json').status_code == 400
+    # unknown framework -> 400
+    assert client.post('/api/agents/compliance/audit/',
+                       {'document_text': 'x', 'framework': 'nope'}, format='json').status_code == 400
+
+
+def test_compliance_api_requires_auth():
+    from rest_framework.test import APIClient
+    assert APIClient().get('/api/agents/compliance/frameworks/').status_code in (401, 403)
