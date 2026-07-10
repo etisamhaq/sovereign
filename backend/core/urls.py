@@ -5,7 +5,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import JsonResponse
 from .sitemap import SitemapIndexView, PagesSitemapView, ToolsSitemapView
+
+
+def health(_request):
+    """Lightweight liveness probe for Railway / Docker healthchecks."""
+    return JsonResponse({'status': 'ok'})
 
 _api_routes = [
     path('auth/', include('accounts.urls')),
@@ -20,6 +26,7 @@ _api_routes = [
 ]
 
 urlpatterns = [
+    path('health', health, name='health'),
     path('admin/', admin.site.urls),
 
     # Versioned API (preferred). New clients MUST use /api/v1/; the unversioned
