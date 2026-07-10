@@ -1,0 +1,49 @@
+{
+  "framework": "hipaa",
+  "name": "HIPAA (US Health Insurance Portability and Accountability Act)",
+  "description": "Privacy and security obligations for protected health information (PHI).",
+  "rules": [
+    {
+      "id": "hipaa-phi-safeguards",
+      "title": "Administrative, physical & technical safeguards",
+      "requirement": "The document must describe administrative, physical, and technical safeguards that protect electronic protected health information (ePHI).",
+      "severity": "critical",
+      "reference": "HIPAA Security Rule, 45 CFR 164.308-312"
+    },
+    {
+      "id": "hipaa-minimum-necessary",
+      "title": "Minimum necessary use & disclosure",
+      "requirement": "Uses and disclosures of PHI must be limited to the minimum necessary to accomplish the intended purpose.",
+      "severity": "high",
+      "reference": "HIPAA Privacy Rule, 45 CFR 164.502(b)"
+    },
+    {
+      "id": "hipaa-baa",
+      "title": "Business Associate Agreements",
+      "requirement": "There must be Business Associate Agreements (BAAs) in place with any third party that handles PHI on the covered entity's behalf.",
+      "severity": "high",
+      "reference": "HIPAA, 45 CFR 164.308(b)"
+    },
+    {
+      "id": "hipaa-breach-notification",
+      "title": "Breach notification",
+      "requirement": "There must be a process to notify affected individuals (and HHS) of a breach of unsecured PHI without unreasonable delay and no later than 60 days.",
+      "severity": "critical",
+      "reference": "HIPAA Breach Notification Rule, 45 CFR 164.404"
+    },
+    {
+      "id": "hipaa-patient-rights",
+      "title": "Individual access & amendment rights",
+      "requirement": "The document must describe individuals' rights to access, inspect, obtain a copy of, and request amendment of their health records.",
+      "severity": "medium",
+      "reference": "HIPAA Privacy Rule, 45 CFR 164.524-526"
+    },
+    {
+      "id": "hipaa-encryption",
+      "title": "Encryption of ePHI",
+      "requirement": "Electronic PHI should be encrypted at rest and in transit to render it unusable to unauthorized individuals.",
+      "severity": "high",
+      "reference": "HIPAA Security Rule, 45 CFR 164.312(a)(2)(iv), (e)(2)(ii)"
+    }
+  ]
+}

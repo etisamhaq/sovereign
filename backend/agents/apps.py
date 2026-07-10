@@ -27,3 +27,9 @@ class AgentsConfig(AppConfig):
             from . import tool_bindings  # noqa: F401
         except Exception as exc:  # pragma: no cover - defensive
             logger.warning('Failed to load agents.tool_bindings: %s', exc)
+
+        # Compliance audit tools (the Sovereign flagship capability).
+        try:
+            from . import compliance  # noqa: F401
+        except Exception as exc:  # pragma: no cover - defensive
+            logger.warning('Failed to load agents.compliance: %s', exc)

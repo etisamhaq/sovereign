@@ -1,0 +1,35 @@
+slug: compliance_audit
+name: "Document → Compliance Audit"
+description: >
+  Audit a contract or policy against a regulatory framework (GDPR, HIPAA, SOC 2)
+  and produce a cited, severity-ranked Markdown risk report. Runs through the
+  multi-provider router, so the same audit can execute privately on your own AMD
+  Instinct GPUs (provider=amd) or on a fast managed endpoint (provider=fireworks).
+inputs:
+  document_text:
+    type: string
+    required: true
+  framework:
+    type: string
+    default: gdpr
+  provider:
+    type: string
+    default: ""
+  document_name:
+    type: string
+    default: "Document"
+steps:
+  - id: audit
+    tool: audit_document_compliance
+    args:
+      document_text: "{{ inputs.document_text }}"
+      framework: "{{ inputs.framework }}"
+      provider: "{{ inputs.provider }}"
+
+  - id: report
+    tool: compliance_report
+    args:
+      audit: "{{ steps.audit.output }}"
+      document_name: "{{ inputs.document_name }}"
+
+output: report

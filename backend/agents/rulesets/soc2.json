@@ -1,0 +1,49 @@
+{
+  "framework": "soc2",
+  "name": "SOC 2 (Trust Services Criteria)",
+  "description": "Common Criteria controls for security, availability, and confidentiality.",
+  "rules": [
+    {
+      "id": "soc2-access-control",
+      "title": "Logical access control & least privilege",
+      "requirement": "The document must describe logical access controls restricting access to systems and data based on least privilege and role-based access.",
+      "severity": "high",
+      "reference": "SOC 2 CC6.1"
+    },
+    {
+      "id": "soc2-encryption",
+      "title": "Encryption in transit & at rest",
+      "requirement": "Sensitive data must be encrypted both in transit and at rest using industry-standard algorithms.",
+      "severity": "high",
+      "reference": "SOC 2 CC6.7"
+    },
+    {
+      "id": "soc2-change-management",
+      "title": "Change management",
+      "requirement": "There must be a documented change management process governing how changes to systems are authorized, tested, and deployed.",
+      "severity": "medium",
+      "reference": "SOC 2 CC8.1"
+    },
+    {
+      "id": "soc2-monitoring",
+      "title": "Logging & monitoring",
+      "requirement": "Systems must be monitored, and security events logged and reviewed to detect anomalies and unauthorized activity.",
+      "severity": "medium",
+      "reference": "SOC 2 CC7.2"
+    },
+    {
+      "id": "soc2-incident-response",
+      "title": "Incident response",
+      "requirement": "There must be a documented incident response plan describing how security incidents are detected, escalated, and remediated.",
+      "severity": "critical",
+      "reference": "SOC 2 CC7.3-7.4"
+    },
+    {
+      "id": "soc2-vendor-management",
+      "title": "Vendor / third-party risk management",
+      "requirement": "The document must describe how third-party vendors are assessed and monitored for security risk.",
+      "severity": "medium",
+      "reference": "SOC 2 CC9.2"
+    }
+  ]
+}

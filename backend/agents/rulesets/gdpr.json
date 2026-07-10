@@ -1,0 +1,56 @@
+{
+  "framework": "gdpr",
+  "name": "GDPR (EU General Data Protection Regulation)",
+  "description": "Core obligations for processing personal data of EU data subjects.",
+  "rules": [
+    {
+      "id": "gdpr-lawful-basis",
+      "title": "Lawful basis for processing",
+      "requirement": "The document must identify a valid lawful basis for processing personal data (consent, contract, legal obligation, vital interests, public task, or legitimate interests).",
+      "severity": "high",
+      "reference": "GDPR Art. 6"
+    },
+    {
+      "id": "gdpr-consent",
+      "title": "Valid, withdrawable consent",
+      "requirement": "Where consent is the basis, it must be freely given, specific, informed and unambiguous, and as easy to withdraw as to give.",
+      "severity": "high",
+      "reference": "GDPR Art. 7"
+    },
+    {
+      "id": "gdpr-data-subject-rights",
+      "title": "Data subject rights",
+      "requirement": "The document must describe how data subjects can exercise their rights: access, rectification, erasure ('right to be forgotten'), restriction, and data portability.",
+      "severity": "high",
+      "reference": "GDPR Arts. 15-20"
+    },
+    {
+      "id": "gdpr-breach-notification",
+      "title": "72-hour breach notification",
+      "requirement": "There must be a process to notify the supervisory authority of a personal data breach within 72 hours of becoming aware of it.",
+      "severity": "critical",
+      "reference": "GDPR Art. 33"
+    },
+    {
+      "id": "gdpr-data-minimization",
+      "title": "Data minimization & purpose limitation",
+      "requirement": "Personal data collected must be adequate, relevant and limited to what is necessary, and processed only for specified, explicit, legitimate purposes.",
+      "severity": "medium",
+      "reference": "GDPR Art. 5"
+    },
+    {
+      "id": "gdpr-international-transfer",
+      "title": "International transfer safeguards",
+      "requirement": "Transfers of personal data outside the EEA must be covered by appropriate safeguards (adequacy decision, Standard Contractual Clauses, or Binding Corporate Rules).",
+      "severity": "high",
+      "reference": "GDPR Chapter V"
+    },
+    {
+      "id": "gdpr-dpo-contact",
+      "title": "Data protection contact / DPO",
+      "requirement": "The document should provide the identity and contact details of the data controller and, where required, the Data Protection Officer.",
+      "severity": "low",
+      "reference": "GDPR Arts. 13, 37-39"
+    }
+  ]
+}
