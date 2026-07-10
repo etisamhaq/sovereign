@@ -205,7 +205,7 @@ class GroqProvider(BaseLLMProvider):
     def is_configured(self) -> bool:
         return bool(getattr(settings, 'GROQ_API_KEY', None))
 
-    def _kwargs(self, *, messages, tools, tool_choice, temperature, max_tokens, model, stream=False):
+    def _kwargs(self, *, messages, tools, tool_choice, temperature, max_tokens, model=None, stream=False):
         kwargs: Dict[str, Any] = {
             'model': model or self.default_model,
             'messages': list(messages),
@@ -532,7 +532,7 @@ class OpenAICompatibleProvider(BaseLLMProvider):
             return False
         return True
 
-    def _kwargs(self, *, messages, tools, tool_choice, temperature, max_tokens, model, stream=False):
+    def _kwargs(self, *, messages, tools, tool_choice, temperature, max_tokens, model=None, stream=False):
         kwargs: Dict[str, Any] = {
             'model': model or self.default_model,
             'messages': list(messages),
