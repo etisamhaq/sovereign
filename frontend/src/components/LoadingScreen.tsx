@@ -1,12 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { ShieldCheckIcon } from '@heroicons/react/24/outline';
 
 const LoadingScreen: React.FC = () => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-50 dark:bg-gray-900">
       <div className="text-center">
         <motion.div
-          className="inline-block"
+          className="inline-flex h-16 w-16 items-center justify-center rounded-xl bg-primary-600 text-white"
           animate={{
             scale: [1, 1.1, 1],
           }}
@@ -16,11 +17,7 @@ const LoadingScreen: React.FC = () => {
             ease: "easeInOut",
           }}
         >
-          <img
-            src="/logo.jpg"
-            alt="Sovereign"
-            className="w-16 h-16 rounded-xl"
-          />
+          <ShieldCheckIcon className="h-9 w-9" />
         </motion.div>
         <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">Loading...</p>
       </div>

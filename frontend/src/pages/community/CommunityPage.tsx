@@ -112,7 +112,7 @@ const CommunityPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Hero */}
-      <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 text-white">
+      <div className="bg-gradient-to-r from-primary-600 via-emerald-600 to-primary-700 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -120,10 +120,10 @@ const CommunityPage: React.FC = () => {
             className="text-center"
           >
             <div className="flex justify-center mb-4">
-              <ChatBubbleLeftRightIcon className="h-12 w-12 text-indigo-200" />
+              <ChatBubbleLeftRightIcon className="h-12 w-12 text-primary-200" />
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold mb-3">Sovereign Community</h1>
-            <p className="text-indigo-200 text-lg max-w-2xl mx-auto">
+            <p className="text-primary-200 text-lg max-w-2xl mx-auto">
               Connect with fellow writers, share tips, get help with AI tools, and showcase your work.
             </p>
             <div className="flex justify-center gap-3 mt-6">
@@ -131,7 +131,7 @@ const CommunityPage: React.FC = () => {
                 <>
                   <Link
                     to="/community/new"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-indigo-700 font-semibold hover:bg-indigo-50 transition-colors"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-primary-700 font-semibold hover:bg-primary-50 transition-colors"
                   >
                     <PlusIcon className="h-5 w-5" /> New Post
                   </Link>
@@ -145,7 +145,7 @@ const CommunityPage: React.FC = () => {
               ) : (
                 <Link
                   to="/register"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-indigo-700 font-semibold hover:bg-indigo-50 transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-primary-700 font-semibold hover:bg-primary-50 transition-colors"
                 >
                   Join the Community
                 </Link>
@@ -278,7 +278,7 @@ const CommunityPage: React.FC = () => {
                 {isAuthenticated && (
                   <Link
                     to="/community/new"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition-colors"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary-600 text-white font-semibold hover:bg-primary-700 transition-colors"
                   >
                     <PlusIcon className="h-5 w-5" /> Create Post
                   </Link>
@@ -296,7 +296,7 @@ const CommunityPage: React.FC = () => {
                 <div className="space-y-2">
                   <Link
                     to="/community/new"
-                    className="flex items-center gap-2 w-full px-4 py-2.5 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors"
+                    className="flex items-center gap-2 w-full px-4 py-2.5 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors"
                   >
                     <PlusIcon className="h-4 w-4" /> New Post
                   </Link>
@@ -323,14 +323,14 @@ const CommunityPage: React.FC = () => {
 
             {/* CTA for non-authenticated */}
             {!isAuthenticated && (
-              <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl p-5 text-white">
+              <div className="bg-gradient-to-br from-primary-500 to-emerald-600 rounded-xl p-5 text-white">
                 <h3 className="font-semibold mb-2">Join the Community</h3>
-                <p className="text-sm text-indigo-100 mb-4">
+                <p className="text-sm text-primary-100 mb-4">
                   Create an account to post, reply, like, and bookmark content.
                 </p>
                 <Link
                   to="/register"
-                  className="inline-block w-full text-center px-4 py-2.5 text-sm font-semibold bg-white text-indigo-700 rounded-lg hover:bg-indigo-50 transition-colors"
+                  className="inline-block w-full text-center px-4 py-2.5 text-sm font-semibold bg-white text-primary-700 rounded-lg hover:bg-primary-50 transition-colors"
                 >
                   Sign Up Free
                 </Link>

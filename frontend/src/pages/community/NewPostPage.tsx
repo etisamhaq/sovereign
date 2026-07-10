@@ -179,7 +179,7 @@ const NewPostPage: React.FC = () => {
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Sign in to create a post
           </h2>
-          <Link to="/login" className="text-indigo-600 hover:text-indigo-700 font-medium">
+          <Link to="/login" className="text-primary-600 hover:text-primary-700 font-medium">
             Go to Login →
           </Link>
         </div>
@@ -192,7 +192,7 @@ const NewPostPage: React.FC = () => {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Link
           to="/community"
-          className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 mb-6 transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 mb-6 transition-colors"
         >
           <ArrowLeftIcon className="h-4 w-4" /> Back to Community
         </Link>
@@ -219,7 +219,7 @@ const NewPostPage: React.FC = () => {
                     onClick={() => setCategoryId(cat.id)}
                     className={`flex items-center gap-2 p-3 rounded-lg border-2 text-sm font-medium transition-all ${
                       categoryId === cat.id
-                        ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-400'
+                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-400'
                         : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 text-gray-700 dark:text-gray-300'
                     }`}
                   >
@@ -241,7 +241,7 @@ const NewPostPage: React.FC = () => {
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="What's your post about?"
                 maxLength={300}
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 p-3 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 p-3 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
               <p className="mt-1 text-xs text-gray-400">{title.length}/300</p>
             </div>
@@ -256,7 +256,7 @@ const NewPostPage: React.FC = () => {
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="Write your post content here... Share your thoughts, ask a question, or start a discussion."
                 rows={10}
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 p-3 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-y"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 p-3 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-y"
               />
               <p className="mt-1 text-xs text-gray-400">{content.length} characters</p>
             </div>
@@ -281,7 +281,7 @@ const NewPostPage: React.FC = () => {
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={mediaItems.length >= MAX_ATTACHMENTS}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 text-sm text-gray-600 dark:text-gray-400 hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400 disabled:opacity-50 transition-colors w-full sm:w-auto"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 text-sm text-gray-600 dark:text-gray-400 hover:border-primary-400 hover:text-primary-600 dark:hover:text-primary-400 disabled:opacity-50 transition-colors w-full sm:w-auto"
               >
                 <PhotoIcon className="h-5 w-5" />
                 Add photos or video
@@ -340,7 +340,7 @@ const NewPostPage: React.FC = () => {
                       if (e.key === 'Enter') { e.preventDefault(); handleAddTag(); }
                     }}
                     placeholder="Add a tag..."
-                    className="w-full pl-9 pr-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full pl-9 pr-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     disabled={tags.length >= 5}
                   />
                 </div>
@@ -358,7 +358,7 @@ const NewPostPage: React.FC = () => {
                   {tags.map((tag) => (
                     <span
                       key={tag}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-sm bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-sm bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400"
                     >
                       #{tag}
                       <button
@@ -385,7 +385,7 @@ const NewPostPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={mutation.isPending || !title.trim() || !content.trim() || !categoryId}
-                className="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-white bg-primary-600 rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 <PaperAirplaneIcon className="h-4 w-4" />
                 {mutation.isPending ? 'Posting...' : 'Publish Post'}

@@ -83,7 +83,7 @@ const EditPostPage: React.FC = () => {
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Not authorized</h2>
-          <Link to="/community" className="text-indigo-600">← Back to Community</Link>
+          <Link to="/community" className="text-primary-600">← Back to Community</Link>
         </div>
       </div>
     );
@@ -94,7 +94,7 @@ const EditPostPage: React.FC = () => {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Link
           to={`/community/post/${slug}`}
-          className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-indigo-600 mb-6 transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 mb-6 transition-colors"
         >
           <ArrowLeftIcon className="h-4 w-4" /> Back to Post
         </Link>
@@ -114,7 +114,7 @@ const EditPostPage: React.FC = () => {
                     onClick={() => setCategoryId(cat.id)}
                     className={`flex items-center gap-2 p-3 rounded-lg border-2 text-sm font-medium transition-all ${
                       categoryId === cat.id
-                        ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-400'
+                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-400'
                         : 'border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300'
                     }`}
                   >
@@ -133,7 +133,7 @@ const EditPostPage: React.FC = () => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 maxLength={300}
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 p-3 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 p-3 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
             </div>
 
@@ -144,7 +144,7 @@ const EditPostPage: React.FC = () => {
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 rows={10}
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 p-3 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-y"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 p-3 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-y"
               />
             </div>
 
@@ -160,7 +160,7 @@ const EditPostPage: React.FC = () => {
                     onChange={(e) => setTagInput(e.target.value)}
                     onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddTag(); } }}
                     placeholder="Add a tag..."
-                    className="w-full pl-9 pr-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full pl-9 pr-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     disabled={tags.length >= 5}
                   />
                 </div>
@@ -172,7 +172,7 @@ const EditPostPage: React.FC = () => {
               {tags.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-2">
                   {tags.map((tag) => (
-                    <span key={tag} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-sm bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400">
+                    <span key={tag} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-sm bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400">
                       #{tag}
                       <button type="button" onClick={() => setTags(tags.filter((t) => t !== tag))} className="hover:text-red-500">
                         <XMarkIcon className="h-3.5 w-3.5" />
@@ -190,7 +190,7 @@ const EditPostPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={mutation.isPending}
-                className="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-white bg-primary-600 rounded-lg hover:bg-primary-700 disabled:opacity-50 transition-colors"
               >
                 <PaperAirplaneIcon className="h-4 w-4" />
                 {mutation.isPending ? 'Saving...' : 'Save Changes'}

@@ -67,7 +67,7 @@ const MyPostsPage: React.FC = () => {
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Sign in required</h2>
-          <Link to="/login" className="text-indigo-600 font-medium">Go to Login →</Link>
+          <Link to="/login" className="text-primary-600 font-medium">Go to Login →</Link>
         </div>
       </div>
     );
@@ -78,7 +78,7 @@ const MyPostsPage: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Link
           to="/community"
-          className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-indigo-600 mb-6 transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 mb-6 transition-colors"
         >
           <ArrowLeftIcon className="h-4 w-4" /> Back to Community
         </Link>
@@ -87,7 +87,7 @@ const MyPostsPage: React.FC = () => {
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">My Community</h1>
           <Link
             to="/community/new"
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors"
           >
             <PlusIcon className="h-4 w-4" /> New Post
           </Link>
@@ -99,7 +99,7 @@ const MyPostsPage: React.FC = () => {
             onClick={() => { setSearchParams({ tab: 'posts' }); setPage(1); }}
             className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
               tab === 'posts'
-                ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400'
+                ? 'border-primary-500 text-primary-600 dark:text-primary-400'
                 : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
             }`}
           >
@@ -111,7 +111,7 @@ const MyPostsPage: React.FC = () => {
             onClick={() => { setSearchParams({ tab: 'bookmarks' }); setPage(1); }}
             className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
               tab === 'bookmarks'
-                ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400'
+                ? 'border-primary-500 text-primary-600 dark:text-primary-400'
                 : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
             }`}
           >
@@ -173,7 +173,7 @@ const MyPostsPage: React.FC = () => {
                 <p className="text-gray-500 dark:text-gray-400 mb-4">Start a conversation in the community!</p>
                 <Link
                   to="/community/new"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary-600 text-white font-semibold hover:bg-primary-700"
                 >
                   <PlusIcon className="h-5 w-5" /> Create Post
                 </Link>
@@ -183,7 +183,7 @@ const MyPostsPage: React.FC = () => {
                 <BookmarkIcon className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No bookmarks</h3>
                 <p className="text-gray-500 dark:text-gray-400 mb-4">Bookmark posts you want to read later</p>
-                <Link to="/community" className="text-indigo-600 font-medium hover:text-indigo-700">
+                <Link to="/community" className="text-primary-600 font-medium hover:text-primary-700">
                   Browse Community →
                 </Link>
               </>

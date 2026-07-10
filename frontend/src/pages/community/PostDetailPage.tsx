@@ -205,7 +205,7 @@ const PostDetailPage: React.FC = () => {
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Post not found</h2>
-          <Link to="/community" className="text-indigo-600 hover:text-indigo-700">
+          <Link to="/community" className="text-primary-600 hover:text-primary-700">
             ← Back to Community
           </Link>
         </div>
@@ -269,7 +269,7 @@ const PostDetailPage: React.FC = () => {
         {/* Back link */}
         <Link
           to="/community"
-          className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 mb-6 transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 mb-6 transition-colors"
         >
           <ArrowLeftIcon className="h-4 w-4" /> Back to Community
         </Link>
@@ -403,7 +403,7 @@ const PostDetailPage: React.FC = () => {
                 <Link
                   key={tag}
                   to={`/community?tag=${tag}`}
-                  className="text-sm px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 hover:text-indigo-600 transition-colors"
+                  className="text-sm px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-primary-100 dark:hover:bg-primary-900/30 hover:text-primary-600 transition-colors"
                 >
                   #{tag}
                 </Link>
@@ -418,8 +418,8 @@ const PostDetailPage: React.FC = () => {
                 onClick={() => { if (!isAuthenticated) { toast.error('Please log in'); return; } likeMutation.mutate(); }}
                 className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                   post.is_liked
-                    ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-indigo-100 dark:hover:bg-indigo-900/30'
+                    ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-primary-100 dark:hover:bg-primary-900/30'
                 }`}
               >
                 {post.is_liked ? <HandThumbUpSolidIcon className="h-4 w-4" /> : <HandThumbUpIcon className="h-4 w-4" />}
