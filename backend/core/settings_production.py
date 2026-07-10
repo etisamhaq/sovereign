@@ -10,10 +10,18 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '.vercel.app,.railway.app,.herokuapp.
 
 # Add your frontend URL
 CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOWED_ORIGINS = os.getenv(
-    'CORS_ALLOWED_ORIGINS',
-    'https://sovereign.com,https://www.sovereign.com'
-).split(',')
+CORS_ALLOWED_ORIGINS = [
+    o for o in os.getenv(
+        'CORS_ALLOWED_ORIGINS',
+        'https://sovereign.com,https://www.sovereign.com'
+    ).split(',') if o
+]
+# Allow any Vercel deployment of this app (preview + production URLs are *.vercel.app).
+CORS_ALLOWED_ORIGIN_REGEXES = [r'^https://.*\.vercel\.app$']
+# JWT (Bearer) auth is CSRF-exempt, but keep admin/session-safe origins trusted too.
+CSRF_TRUSTED_ORIGINS = [
+    o for o in os.getenv('CSRF_TRUSTED_ORIGINS', 'https://*.vercel.app').split(',') if o
+]
 
 # Database - Use DATABASE_URL from environment
 DATABASES = {
