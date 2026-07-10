@@ -3,9 +3,11 @@ Multi-provider LLM abstraction.
 
 Goals
 -----
-- One interface for chat completions across providers (Groq today,
-  OpenAI / Anthropic / Ollama as fallbacks). Adding a provider is a
-  one-class change.
+- One interface for chat completions across providers. Sovereign ships two
+  first-class paths: ``amd`` (an open model self-hosted on AMD Instinct GPUs
+  via vLLM/ROCm — the private, data-sovereign path) and ``fireworks`` (managed
+  low-latency cloud). Groq / OpenAI / Anthropic / Ollama remain available.
+  Adding a provider is a one-class change.
 - Tool calling parity. The runner uses the OpenAI-compatible
   ``messages + tools + tool_choice`` schema; each provider adapts to it.
 - Predictable failure modes. ``LLMError`` is the only exception propagated
@@ -57,6 +59,16 @@ _COST_TABLE: Dict[str, Dict[str, Dict[str, Decimal]]] = {
     },
     'ollama': {
         '__default__':                   {'input': Decimal('0'),       'output': Decimal('0')},
+    },
+    # Self-hosted on the customer's own AMD Instinct GPUs — no per-token cost.
+    'amd': {
+        '__default__':                   {'input': Decimal('0'),       'output': Decimal('0')},
+    },
+    'fireworks': {
+        # Fireworks serverless pricing (USD/1K tokens), as of 2026-04.
+        'accounts/fireworks/models/llama-v3p1-8b-instruct':  {'input': Decimal('0.0002'), 'output': Decimal('0.0002')},
+        'accounts/fireworks/models/llama-v3p1-70b-instruct': {'input': Decimal('0.0009'), 'output': Decimal('0.0009')},
+        '__default__':                   {'input': Decimal('0.0009'),  'output': Decimal('0.0009')},
     },
 }
 
@@ -480,11 +492,192 @@ class OllamaProvider(BaseLLMProvider):
         )
 
 
+# ─── OpenAI-compatible base (AMD vLLM / Fireworks) ─────────────────────────
+
+
+class OpenAICompatibleProvider(BaseLLMProvider):
+    """Shared implementation for any OpenAI-compatible ``/v1`` endpoint.
+
+    Both self-hosted vLLM (AMD Instinct / ROCm) and Fireworks AI speak the
+    OpenAI chat-completions protocol, including ``tools``/``tool_choice`` and
+    streaming tool-call deltas — so the wire logic is identical to Groq's.
+    Subclasses only declare *where* to connect and *which* model to default to.
+    """
+
+    #: When True, ``is_configured`` also requires a non-empty API key. Managed
+    #: clouds (Fireworks) need one; a private vLLM box usually does not.
+    requires_api_key: bool = False
+
+    base_url: str = ''
+    api_key: str = ''
+
+    def __init__(self) -> None:
+        self._client = None
+        if self.is_configured():
+            try:
+                from openai import OpenAI
+                # vLLM accepts any non-empty key; default to 'EMPTY' so the SDK
+                # (which rejects a falsy key) still initialises for local boxes.
+                self._client = OpenAI(
+                    base_url=self.base_url,
+                    api_key=self.api_key or 'EMPTY',
+                )
+            except Exception as exc:  # pragma: no cover - SDK optional
+                logger.info('%s SDK unavailable: %s', self.name, exc)
+
+    def is_configured(self) -> bool:
+        if not self.base_url:
+            return False
+        if self.requires_api_key and not self.api_key:
+            return False
+        return True
+
+    def _kwargs(self, *, messages, tools, tool_choice, temperature, max_tokens, model, stream=False):
+        kwargs: Dict[str, Any] = {
+            'model': model or self.default_model,
+            'messages': list(messages),
+            'temperature': temperature,
+            'max_tokens': max_tokens,
+        }
+        if tools:
+            kwargs['tools'] = list(tools)
+            kwargs['tool_choice'] = tool_choice
+        if stream:
+            kwargs['stream'] = True
+        return kwargs
+
+    def chat(self, **kwargs) -> LLMResponse:
+        if self._client is None:
+            raise LLMError(f'{self.name} provider not configured')
+        params = self._kwargs(**kwargs)
+        completion = self._client.chat.completions.create(**params)
+        choice = completion.choices[0]
+        msg = choice.message
+        tool_calls: List[ToolCall] = []
+        for tc in (getattr(msg, 'tool_calls', None) or []):
+            try:
+                args = json.loads(tc.function.arguments) if tc.function.arguments else {}
+            except json.JSONDecodeError:
+                args = {'__raw__': tc.function.arguments}
+            tool_calls.append(ToolCall(id=tc.id, name=tc.function.name, arguments=args))
+        usage = getattr(completion, 'usage', None)
+        return LLMResponse(
+            content=msg.content or '',
+            tool_calls=tool_calls,
+            finish_reason=choice.finish_reason or 'stop',
+            prompt_tokens=getattr(usage, 'prompt_tokens', 0) or 0,
+            completion_tokens=getattr(usage, 'completion_tokens', 0) or 0,
+            provider=self.name,
+            model=params['model'],
+        )
+
+    def stream_chat(self, **kwargs) -> Iterator[LLMStreamEvent]:
+        if self._client is None:
+            raise LLMError(f'{self.name} provider not configured')
+        params = self._kwargs(stream=True, **kwargs)
+        stream = self._client.chat.completions.create(**params)
+
+        tool_buffer: Dict[int, Dict[str, Any]] = {}
+        prompt_tokens = 0
+        completion_tokens = 0
+        finish_reason = ''
+
+        for chunk in stream:
+            try:
+                delta = chunk.choices[0].delta
+            except (AttributeError, IndexError):
+                # Final usage-only chunk (no choices) on some servers.
+                usage = getattr(chunk, 'usage', None)
+                if usage:
+                    prompt_tokens = getattr(usage, 'prompt_tokens', prompt_tokens) or prompt_tokens
+                    completion_tokens = getattr(usage, 'completion_tokens', completion_tokens) or completion_tokens
+                continue
+            if getattr(delta, 'content', None):
+                yield LLMStreamEvent(type='delta', delta=delta.content)
+            for tc in (getattr(delta, 'tool_calls', None) or []):
+                buf = tool_buffer.setdefault(tc.index, {'id': '', 'name': '', 'arguments': ''})
+                if getattr(tc, 'id', None):
+                    buf['id'] = tc.id
+                fn = getattr(tc, 'function', None)
+                if fn:
+                    if getattr(fn, 'name', None):
+                        buf['name'] = fn.name
+                    if getattr(fn, 'arguments', None):
+                        buf['arguments'] += fn.arguments
+            fr = getattr(chunk.choices[0], 'finish_reason', None)
+            if fr:
+                finish_reason = fr
+            usage = getattr(chunk, 'usage', None)
+            if usage:
+                prompt_tokens = getattr(usage, 'prompt_tokens', prompt_tokens) or prompt_tokens
+                completion_tokens = getattr(usage, 'completion_tokens', completion_tokens) or completion_tokens
+
+        if tool_buffer:
+            calls: List[ToolCall] = []
+            for entry in tool_buffer.values():
+                try:
+                    arguments = json.loads(entry['arguments']) if entry['arguments'] else {}
+                except json.JSONDecodeError:
+                    arguments = {'__raw__': entry['arguments']}
+                calls.append(ToolCall(id=entry['id'], name=entry['name'], arguments=arguments))
+            yield LLMStreamEvent(type='tool_calls', tool_calls=calls)
+
+        yield LLMStreamEvent(
+            type='usage',
+            prompt_tokens=prompt_tokens,
+            completion_tokens=completion_tokens,
+        )
+        yield LLMStreamEvent(type='done', finish_reason=finish_reason or 'stop')
+
+
+# ─── AMD Instinct (self-hosted vLLM / ROCm) — the private path ─────────────
+
+
+class AMDvLLMProvider(OpenAICompatibleProvider):
+    """Open model served on AMD Instinct GPUs via vLLM on ROCm.
+
+    This is the data-sovereignty path: inference happens on the customer's own
+    AMD hardware, so confidential documents never leave their infrastructure.
+    A self-hosted endpoint typically needs no real API key.
+    """
+
+    name = 'amd'
+    requires_api_key = False
+
+    def __init__(self) -> None:
+        self.base_url = (getattr(settings, 'AMD_VLLM_BASE_URL', '') or '').rstrip('/')
+        self.api_key = getattr(settings, 'AMD_VLLM_API_KEY', 'EMPTY') or 'EMPTY'
+        self.default_model = getattr(settings, 'AMD_VLLM_MODEL', 'meta-llama/Llama-3.1-8B-Instruct')
+        super().__init__()
+
+
+# ─── Fireworks AI (managed cloud) — the low-latency path ───────────────────
+
+
+class FireworksProvider(OpenAICompatibleProvider):
+    """Fireworks AI managed inference (OpenAI-compatible). The fast cloud path."""
+
+    name = 'fireworks'
+    requires_api_key = True
+
+    def __init__(self) -> None:
+        self.base_url = (
+            getattr(settings, 'FIREWORKS_BASE_URL', 'https://api.fireworks.ai/inference/v1') or ''
+        ).rstrip('/')
+        self.api_key = getattr(settings, 'FIREWORKS_API_KEY', '') or ''
+        self.default_model = getattr(
+            settings, 'FIREWORKS_MODEL', 'accounts/fireworks/models/llama-v3p1-8b-instruct'
+        )
+        super().__init__()
+
+
 # ─── Router with fallback chain ──────────────────────────────────────────
 
 
 _PROVIDER_CLASSES: Dict[str, type] = {
     'groq': GroqProvider,
+    'amd': AMDvLLMProvider,
+    'fireworks': FireworksProvider,
     'openai': OpenAIProvider,
     'anthropic': AnthropicProvider,
     'ollama': OllamaProvider,

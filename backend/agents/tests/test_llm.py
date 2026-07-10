@@ -7,7 +7,14 @@ from decimal import Decimal
 from django.test import override_settings
 
 from agents import llm as llm_module
-from agents.llm import LLMError, LLMResponse, LLMRouter, estimate_cost_usd
+from agents.llm import (
+    AMDvLLMProvider,
+    FireworksProvider,
+    LLMError,
+    LLMResponse,
+    LLMRouter,
+    estimate_cost_usd,
+)
 
 
 class _StubProvider:
@@ -66,3 +73,45 @@ def test_router_raises_when_all_fail(monkeypatch):
     import pytest
     with pytest.raises(LLMError):
         router.chat(messages=[{'role': 'user', 'content': 'hi'}])
+
+
+# ── AMD + Fireworks providers (the hackathon delta) ────────────────────────
+
+
+def test_amd_and_fireworks_are_registered():
+    """Both new providers must be resolvable by the router."""
+    assert llm_module._PROVIDER_CLASSES['amd'] is AMDvLLMProvider
+    assert llm_module._PROVIDER_CLASSES['fireworks'] is FireworksProvider
+
+
+@override_settings(AMD_VLLM_BASE_URL='')
+def test_amd_unconfigured_without_base_url():
+    assert AMDvLLMProvider().is_configured() is False
+
+
+@override_settings(AMD_VLLM_BASE_URL='http://instinct-host:8000/v1', AMD_VLLM_API_KEY='EMPTY')
+def test_amd_configured_with_base_url_only():
+    """A self-hosted vLLM box needs only a base_url — no real API key."""
+    provider = AMDvLLMProvider()
+    assert provider.is_configured() is True
+    assert provider.base_url == 'http://instinct-host:8000/v1'
+
+
+@override_settings(FIREWORKS_API_KEY='', FIREWORKS_BASE_URL='https://api.fireworks.ai/inference/v1')
+def test_fireworks_requires_api_key():
+    assert FireworksProvider().is_configured() is False
+
+
+@override_settings(FIREWORKS_API_KEY='fw-secret', FIREWORKS_BASE_URL='https://api.fireworks.ai/inference/v1')
+def test_fireworks_configured_with_key():
+    assert FireworksProvider().is_configured() is True
+
+
+def test_amd_self_hosted_is_zero_cost():
+    """The whole pitch: running on your own AMD GPUs has no per-token cost."""
+    assert estimate_cost_usd('amd', 'meta-llama/Llama-3.1-8B-Instruct', 10_000, 10_000) == Decimal('0')
+
+
+def test_fireworks_cost_uses_table():
+    cost = estimate_cost_usd('fireworks', 'accounts/fireworks/models/llama-v3p1-8b-instruct', 1000, 1000)
+    assert cost == Decimal('0.0002') + Decimal('0.0002')

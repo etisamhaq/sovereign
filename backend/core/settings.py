@@ -350,6 +350,19 @@ ANTHROPIC_MODEL = os.getenv('ANTHROPIC_MODEL', 'claude-3-5-sonnet-latest')
 OLLAMA_BASE_URL = os.getenv('OLLAMA_BASE_URL', '')
 OLLAMA_MODEL = os.getenv('OLLAMA_MODEL', 'llama3.1:8b')
 
+# ── AMD Instinct (self-hosted, private) — the data-sovereignty path ─────────
+# An open model served on AMD Developer Cloud via vLLM/ROCm, exposing the
+# OpenAI-compatible /v1 API. This is the "your data never leaves your GPUs"
+# path. AMD_VLLM_API_KEY is usually unset for a self-hosted endpoint.
+AMD_VLLM_BASE_URL = os.getenv('AMD_VLLM_BASE_URL', '')  # e.g. http://<instinct-host>:8000/v1
+AMD_VLLM_API_KEY = os.getenv('AMD_VLLM_API_KEY', 'EMPTY')
+AMD_VLLM_MODEL = os.getenv('AMD_VLLM_MODEL', 'meta-llama/Llama-3.1-8B-Instruct')
+
+# ── Fireworks AI (managed cloud) — the low-latency path ─────────────────────
+FIREWORKS_API_KEY = os.getenv('FIREWORKS_API_KEY', '')
+FIREWORKS_BASE_URL = os.getenv('FIREWORKS_BASE_URL', 'https://api.fireworks.ai/inference/v1')
+FIREWORKS_MODEL = os.getenv('FIREWORKS_MODEL', 'accounts/fireworks/models/llama-v3p1-8b-instruct')
+
 # Sentry — initialized in BOTH default and production settings so dev/staging
 # also surface errors. No-ops cleanly when SENTRY_DSN is empty.
 SENTRY_DSN = os.getenv('SENTRY_DSN', '')
