@@ -572,6 +572,9 @@ class AgentWorkflowRunCancelView(APIView):
 class AgentApprovalListView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = AgentWorkflowApprovalSerializer
+    # Return a plain array (not a paginated {count, results}) — the dashboard
+    # consumes this as a list (approvals.filter(...)).
+    pagination_class = None
 
     def get_queryset(self):
         return AgentWorkflowApproval.objects.filter(run__created_by=self.request.user).select_related('step_run', 'run').order_by('-requested_at')

@@ -16,10 +16,31 @@ from typing import Any, Dict, Iterator
 
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
+import json as _json
+
 from rest_framework import generics, permissions, status
-from rest_framework.decorators import api_view, permission_classes, throttle_classes
+from rest_framework.decorators import api_view, permission_classes, renderer_classes, throttle_classes
+from rest_framework.renderers import BaseRenderer, JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+
+class EventStreamRenderer(BaseRenderer):
+    """Lets DRF content-negotiation accept ``Accept: text/event-stream`` so the
+    SSE endpoints don't 406. The streaming body is a Django StreamingHttpResponse
+    (never rendered here); this only matters for negotiation and for any
+    error Response returned by the view, which we encode as JSON text."""
+
+    media_type = 'text/event-stream'
+    format = 'event-stream'
+    charset = None
+
+    def render(self, data, accepted_media_type=None, renderer_context=None):
+        if isinstance(data, (dict, list)):
+            return _json.dumps(data).encode('utf-8')
+        if isinstance(data, str):
+            return data.encode('utf-8')
+        return data or b''
 
 from .chat_serializers import (
     AgentRunDetailSerializer,
@@ -286,6 +307,7 @@ class _StreamMixin:
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 @throttle_classes([AgentChatThrottle])
+@renderer_classes([EventStreamRenderer, JSONRenderer])
 def stream_chat(request):
     """Run one user turn against the agent and stream events as SSE.
 
@@ -333,6 +355,7 @@ def stream_chat(request):
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 @throttle_classes([WorkflowRunThrottle])
+@renderer_classes([EventStreamRenderer, JSONRenderer])
 def stream_workflow(request, slug):
     """Run a YAML workflow and stream progress events as SSE.
 
