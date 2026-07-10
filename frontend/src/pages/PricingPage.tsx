@@ -52,7 +52,7 @@ const plans = [
 ];
 
 const PricingPage: React.FC = () => {
-  usePageTitle('Pricing', 'Simple, transparent pricing for Sovereign. Free tier with 50 uses/month or Pro at $5/month for 2,000 uses across all 33+ AI tools.');
+  usePageTitle('Pricing', 'Sovereign pricing. Start free with managed audits, or go Pro to self-host the compliance agent on your own AMD Instinct GPUs.');
   const { user, isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);

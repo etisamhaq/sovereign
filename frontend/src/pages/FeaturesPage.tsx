@@ -165,9 +165,9 @@ const FeaturesPage: React.FC = () => {
     <div className="bg-white dark:bg-gray-900">
       <SEOHead
         title="Features"
-        description="Discover Sovereign's 33+ AI-powered tools for writing, education, research, SEO, and productivity. Lightning fast, private, and affordable."
+        description="Sovereign audits contracts and policies against GDPR, HIPAA, and SOC 2 — privately, on your own AMD Instinct GPUs — and ships a full toolkit of document and research tools."
         canonical="/features"
-        keywords="AI writing features, Sovereign features, AI tool capabilities, writing assistant features"
+        keywords="compliance audit, GDPR, HIPAA, SOC 2, private LLM, self-hosted AI, AMD Instinct, data sovereignty, document audit"
       />
       {/* Hero Section */}
       <div className="relative isolate px-6 pt-14 lg:px-8">
