@@ -1,4 +1,4 @@
-# Sovereign — Private Compliance Audits on Your Own AMD GPUs
+# Sovereign — Private Compliance Audits
 
 **Sovereign is a self-hosted AI agent that audits contracts and policies against GDPR, HIPAA, and SOC 2 — running entirely on your own AMD Instinct GPUs, so confidential documents never leave your infrastructure.**
 
