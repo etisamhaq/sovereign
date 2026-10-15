@@ -2,10 +2,25 @@
 
 **Sovereign is a self-hosted AI agent that audits contracts and policies against GDPR, HIPAA, and SOC 2 — running entirely on your own AMD Instinct GPUs, so confidential documents never leave your infrastructure.**
 
-Live demo:
+![Python](https://img.shields.io/badge/Python-3.11-blue.svg)
+![Django](https://img.shields.io/badge/Django-5.2%20%2B%20DRF-092E20.svg)
+![React](https://img.shields.io/badge/React-18%20%2B%20TypeScript-61DAFB.svg)
+![vLLM](https://img.shields.io/badge/Inference-vLLM%20on%20AMD%20Instinct-ED1C24.svg)
+![Tests](https://img.shields.io/badge/Agent%20tests-83-success.svg)
 
-- **App:** https://sovereign-compliance.vercel.app
-- **API:** https://sovereign-production-f00d.up.railway.app
+**Live:** [sovereign-compliance.vercel.app](https://sovereign-compliance.vercel.app) · **API:** [sovereign-production-f00d.up.railway.app](https://sovereign-production-f00d.up.railway.app)
+
+## At a Glance
+
+| | |
+|---|---|
+| **What it does** | Audits a contract or policy against **GDPR, HIPAA or SOC 2** and returns a risk score plus one finding per rule, each with the regulation reference, the evidence quoted from the document, the gap and a recommendation |
+| **Why it is different** | Inference can run on **your own AMD Instinct GPUs (vLLM on ROCm)**, so confidential documents never reach a third-party API. One toggle switches to Fireworks or Groq when speed matters more than privacy |
+| **Rule packs** | 19 cited rules: GDPR (7), HIPAA (6), SOC 2 (6), as plain JSON in `backend/agents/rulesets/`; adding a framework means adding a file |
+| **Deterministic shape** | The LLM judges each rule, but the output always has the same structure (one finding per rule), and the risk score is computed in code, not by the model |
+| **Engineering** | Multi-provider LLM router with automatic fallback, YAML workflow engine, Celery jobs, Redis, PostgreSQL, Docker; 83 automated agent tests |
+
+![Sovereign sign-in page: "Audit compliance without leaking your data"](docs/images/sign-in.jpg)
 
 ---
 
@@ -53,6 +68,25 @@ Everything runs through the same private inference layer.
 **Infra** — Docker · WhiteNoise · Railway (backend) · Vercel (frontend)
 
 ## Architecture
+
+```mermaid
+flowchart LR
+    U[User: contract or policy] --> FE[React frontend<br/>Vercel]
+    FE -- REST + SSE --> API[Django API<br/>Railway]
+    API --> AUD[Compliance auditor<br/>run_audit]
+    AUD --> RS[(Rule packs<br/>GDPR / HIPAA / SOC 2)]
+    AUD --> R{LLM router<br/>with fallback}
+    R -- private --> AMD[vLLM on AMD Instinct<br/>your own GPUs]
+    R -- fast --> FW[Fireworks AI]
+    R -- fallback --> GQ[Groq]
+    AUD --> REP[Risk score + cited findings<br/>+ Markdown report]
+    API --- PG[(PostgreSQL)]
+    API --- RD[(Redis + Celery)]
+```
+
+**How the risk score is computed:** each rule has a severity weight (critical 10, high 6, medium 3, low 1). Each finding's status contributes a share of that weight (compliant 0, partial 0.5, not addressed 0.7, non-compliant 1.0). The score is the weighted total as a percentage of the maximum, banded into Minimal, Low (>0), Medium (≥20), High (≥45) or Critical (≥70).
+
+Code layout:
 
 ```
 Frontend (React, Vercel)
@@ -104,7 +138,7 @@ Seed the tool catalogue (once): `docker-compose -f docker-compose.dev.yml exec b
 | `DATABASE_URL` / `REDIS_URL` | Postgres + Redis |
 | `SECRET_KEY`, `ALLOWED_HOSTS`, `CORS_ALLOWED_ORIGINS` | Django / prod |
 
-See `DEPLOY.md` for the full deployment checklist and `backend/.env.example` for every variable.
+See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the full deployment checklist and `backend/.env.example` for every variable.
 
 ## Deployment
 
