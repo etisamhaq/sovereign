@@ -16,7 +16,7 @@ interface SEOHeadProps {
 
 const BASE_TITLE = BRAND.name;
 const DEFAULT_DESCRIPTION =
-  'Sovereign — 33+ AI-powered tools for writing, research, education, and productivity. Paraphrase, grammar check, summarize, generate essays, and more.';
+  'Audit contracts and policies against GDPR, HIPAA and SOC 2 with a self-hosted AI agent. Cited, severity-ranked findings; documents never leave your infrastructure.';
 const SITE_URL = BRAND.siteUrl;
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 

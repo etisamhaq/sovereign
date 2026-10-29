@@ -1,6 +1,6 @@
 export const BRAND = {
   name: 'Sovereign',
-  siteUrl: process.env.REACT_APP_SITE_URL || 'https://sovereign.com',
+  siteUrl: process.env.REACT_APP_SITE_URL || 'https://sovereign-compliance.vercel.app',
   bookCallUrl: process.env.REACT_APP_BOOK_CALL_URL || 'https://calendly.com',
   contactEmail: process.env.REACT_APP_CONTACT_EMAIL || 'support@sovereign.com',
   social: {

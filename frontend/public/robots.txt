@@ -1,10 +1,7 @@
-# Sovereign - AI Writing & Research Tools Platform
+# Sovereign - Private Compliance Audits
 User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /settings/
-
-# Sitemap
-Sitemap: https://sovereign.com/sitemap.xml

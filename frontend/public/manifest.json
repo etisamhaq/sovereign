@@ -1,7 +1,7 @@
 {
   "short_name": "Sovereign",
-  "name": "Sovereign — 33+ AI Writing & Research Tools",
-  "description": "AI-powered platform with 33+ tools for writing, research, education, and productivity.",
+  "name": "Sovereign — Private Compliance Audits",
+  "description": "Self-hosted AI agent that audits contracts and policies against GDPR, HIPAA and SOC 2.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -23,5 +23,5 @@
   "display": "standalone",
   "theme_color": "#6366f1",
   "background_color": "#ffffff",
-  "categories": ["productivity", "education", "utilities"]
+  "categories": ["business", "productivity", "security"]
 }
